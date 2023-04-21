@@ -7,25 +7,7 @@ import {
   useUpdateMyPresence,
 } from '../liveblocks.config';
 
-export default function TodoList({ selectedRoomId, selectedEventName }) {
-  function WhoIsHere() {
-    const userCount = useOthers((others) => others.length);
-
-    return (
-      <>
-        {userCount > 0 ? (
-          <div className='who_is_here'>
-            Team status: 👯 There are {userCount} other users online
-          </div>
-        ) : (
-          <div className='who_is_here'>
-            Team status: 🙆🏻‍♀️ You are the only user editing these notes right now!
-          </div>
-        )}
-      </>
-    );
-  }
-
+export default function Agenda({ selectedRoomId, selectedEventName }) {
   function SomeoneIsTyping() {
     const someoneIsTyping = useOthers((others) =>
       others.some((other) => other.presence.isTyping)
@@ -38,32 +20,27 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
     );
   }
 
-  const [draft, setDraft] = useState('');
+  const [draftAgenda, setDraftAgenda] = useState('');
   const updateMyPresence = useUpdateMyPresence();
-  const todos = useStorage((root) => root.todos);
+  const agendaItems = useStorage((root) => root.agendaItems);
 
-  const addTodo = useMutation(({ storage }, text) => {
-    storage.get('todos').push({ text });
+  const addAgendaItem = useMutation(({ storage }, text) => {
+    storage.get('agendaItems').push({ text });
   }, []);
 
-  const deleteTodo = useMutation(({ storage }, index) => {
-    storage.get('todos').delete(index);
+  const deleteAgendaItem = useMutation(({ storage }, index) => {
+    storage.get('agendaItems').delete(index);
   }, []);
 
   return (
     <>
-      <p>
-        {selectedRoomId !== 'todo' && (
-          <>
-            <h1 className='text-outside-boxes inside-margin'>
-              Team notes for {selectedEventName} event
-            </h1>
-            <p className='text-outside-boxes inside-margin'>
-              <WhoIsHere />
-            </p>
+      {selectedRoomId !== 'todo' && (
+        <>
+          <div>
+            <h1 className='text-outside-boxes inside-margin'>Agenda</h1>
             <p className='rounded-box'>
               <div className='inside-margin'>
-                {todos.map((todo, index) => {
+                {agendaItems.map((agendaItem, index) => {
                   return (
                     <div key={index} className='todo-container'>
                       <input
@@ -71,10 +48,10 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
                         // checked='checked'
                         name='radio'
                       ></input>
-                      <span className='todo'>{todo.text}</span>
+                      <span className='todo'>{agendaItem.text}</span>
                       <button
                         className='delete-button'
-                        onClick={() => deleteTodo(index)}
+                        onClick={() => deleteAgendaItem(index)}
                       >
                         ✕
                       </button>
@@ -84,28 +61,30 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
                 <div className='center-container'>
                   <input
                     type='text'
-                    placeholder='What needs to be done?'
-                    value={draft}
+                    placeholder='Add a new agenda item'
+                    value={draftAgenda}
                     onChange={(e) => {
-                      setDraft(e.target.value);
+                      setDraftAgenda(e.target.value);
                       updateMyPresence({ isTyping: true });
                     }}
                     onKeyDown={(e) => {
                       if (e.key === 'Enter') {
                         updateMyPresence({ isTyping: false });
-                        addTodo(draft);
-                        setDraft('');
+                        addAgendaItem(draftAgenda);
+                        setDraftAgenda('');
                       }
                     }}
                     onBlur={() => updateMyPresence({ isTyping: false })}
                   />
-                  <SomeoneIsTyping />
+                  <p className='text-regular'>
+                    <SomeoneIsTyping />
+                  </p>
                 </div>
               </div>
             </p>
-          </>
-        )}
-      </p>
+          </div>
+        </>
+      )}
     </>
   );
 }

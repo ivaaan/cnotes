@@ -80,15 +80,6 @@ async function listEvents(auth) {
   });
   const events = res.data.items;
   return events;
-  // if (!events || events.length === 0) {
-  //   console.log('No upcoming events found.');
-  //   return;
-  // }
-  // console.log('Upcoming 10 events:');
-  // events.map((event, i) => {
-  //   const start = event.start.dateTime || event.start.date;
-  //   console.log(`${start} - ${event.summary}`);
-  // });
 }
 
 async function getData() {
