@@ -25,6 +25,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
   const agendaItems = useStorage((root) => root.agendaItems);
 
   const addAgendaItem = useMutation(({ storage }, text) => {
+    // console.log(storage.get('agendaItems'));
     storage.get('agendaItems').push({ text });
   }, []);
 

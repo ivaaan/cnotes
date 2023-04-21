@@ -9,7 +9,7 @@ export default function Calendar({
     <>
       {calendarEvents.length > 0 ? (
         <p>
-          <div className='rounded-box'>
+          <div className='rounded-box cal'>
             {calendarEvents.map((event) => (
               <div
                 className='inside-margin rounded-box-cal-event'

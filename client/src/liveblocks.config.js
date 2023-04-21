@@ -1,4 +1,4 @@
-import { createClient, LiveList } from '@liveblocks/client';
+import { createClient } from '@liveblocks/client';
 import { createRoomContext } from '@liveblocks/react';
 
 const client = createClient({
@@ -12,6 +12,8 @@ export const {
     useMutation,
     useOthers,
     useStorage,
+    useMyPresence,
     useUpdateMyPresence,
+    useMap,
   },
 } = createRoomContext(client);

@@ -4,8 +4,9 @@ import Calendar from './components/Calendar';
 import { getCalendarEvents } from './api.service';
 import Agenda from './components/Agenda';
 import TodoList from './components/TodoList';
+import SketchPad from './components/SketchPad';
 import { RoomProvider } from './liveblocks.config';
-import { LiveList } from '@liveblocks/client';
+import { LiveList, LiveMap } from '@liveblocks/client';
 import './App.css';
 
 export default function App() {
@@ -27,7 +28,13 @@ export default function App() {
       <RoomProvider
         id={selectedRoomId}
         initialPresence={{}}
-        initialStorage={{ todos: new LiveList() }}
+        initialStorage={
+          ({ todos: new LiveList() },
+          { agendaItems: new LiveList() },
+          {
+            shapes: new LiveMap(),
+          })
+        }
       >
         <div className='header-container'>
           <Header
@@ -50,6 +57,7 @@ export default function App() {
             selectedEventName={selectedEventName}
           />
         </div>
+        <SketchPad />
       </RoomProvider>
     </>
   );
