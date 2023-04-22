@@ -7,6 +7,8 @@ import {
   useUpdateMyPresence,
 } from '../liveblocks.config';
 
+import { LiveList, LiveObject } from '@liveblocks/client';
+
 export default function TodoList({ selectedRoomId, selectedEventName }) {
   function SomeoneIsTyping() {
     const someoneIsTyping = useOthers((others) =>
@@ -25,9 +27,13 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
   const todos = useStorage((root) => root.todos);
 
   const addTodo = useMutation(({ storage }, text) => {
+    storage.get('todos').push(new LiveObject({ text }));
     console.log('todos', storage.get('todos'));
-    storage.get('todos').push({ text });
   }, []);
+
+  // const addTodo = useMutation(({ storage }, text) => {
+  //   storage.get('todos').push(new LiveObject({ text }));
+  // }, []);
 
   const deleteTodo = useMutation(({ storage }, index) => {
     storage.get('todos').delete(index);

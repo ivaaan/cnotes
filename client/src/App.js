@@ -11,6 +11,7 @@ import './App.css';
 import jwt_decode from 'jwt-decode';
 // import { GoogleOAuthProvider } from '@react-oauth/google'
 // import { getData } from './google.service';
+import { unstable_batchedUpdates } from 'react-dom';
 
 export default function App() {
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -93,12 +94,11 @@ export default function App() {
         id={selectedRoomId}
         initialPresence={{}}
         initialStorage={
-          ({ todos: new LiveList() },
-          { agendaItems: new LiveList() },
-          {
-            shapes: new LiveMap(),
-          })
+          ({ agendaItems: new LiveList() },
+          { todos: new LiveList() },
+          { shapes: new LiveMap() })
         }
+        unstable_batchedUpdates={unstable_batchedUpdates}
       >
         <div className='header-container'>
           <div id='signInDiv'></div>
@@ -126,6 +126,7 @@ export default function App() {
             selectedRoomId={selectedRoomId}
             selectedEventName={selectedEventName}
           />
+
           <TodoList
             selectedRoomId={selectedRoomId}
             selectedEventName={selectedEventName}
