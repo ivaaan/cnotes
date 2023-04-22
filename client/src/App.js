@@ -11,7 +11,6 @@ import './App.css';
 import jwt_decode from 'jwt-decode';
 // import { GoogleOAuthProvider } from '@react-oauth/google'
 // import { getData } from './google.service';
-import { unstable_batchedUpdates } from 'react-dom';
 
 export default function App() {
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -93,13 +92,36 @@ export default function App() {
       <RoomProvider
         id={selectedRoomId}
         initialPresence={{}}
-        initialStorage={
-          ({ agendaItems: new LiveList() },
-          { todos: new LiveList() },
-          { shapes: new LiveMap() })
-        }
-        unstable_batchedUpdates={unstable_batchedUpdates}
+        initialStorage={() => ({
+          todos: new LiveList(),
+          agendaItems: new LiveList(),
+          shapes: new LiveMap(),
+
+          fruitsByName: new LiveMap([
+            ['apple', '🍎'],
+            ['banana', '🍌'],
+            ['cherry', '🍒'],
+          ]),
+        })}
       >
+        {/* initialStorage={() => ({
+           { agendaItems: new LiveList() },
+           { todos: new LiveList(['🦁', '🦊', '🐵']) },
+           { shapes: new LiveMap() },
+           {
+             fruitsByName: new LiveMap([
+             ['apple', '🍎'],
+               ['banana', '🍌'],
+               ['cherry', '🍒'],
+             ]),
+           },
+           { animals: new LiveList(['🦁', '🦊', '🐵']) },
+           {
+             animalAgenda: new LiveList(['agenda 🦁', 'hello 🦊', ' world 🐵']),
+           }
+         })
+         }
+       > */}
         <div className='header-container'>
           <div id='signInDiv'></div>
           {Object.keys(user).length != 0 && (
@@ -126,13 +148,12 @@ export default function App() {
             selectedRoomId={selectedRoomId}
             selectedEventName={selectedEventName}
           />
-
           <TodoList
             selectedRoomId={selectedRoomId}
             selectedEventName={selectedEventName}
           />
         </div>
-        <SketchPad />
+        {/* <SketchPad /> */}
       </RoomProvider>
       {/* </GoogleOAuthProvider> */}
     </>

@@ -7,6 +7,8 @@ import {
   useUpdateMyPresence,
 } from '../liveblocks.config';
 
+import { LiveList, LiveObject } from '@liveblocks/client';
+
 export default function Agenda({ selectedRoomId, selectedEventName }) {
   function SomeoneIsTyping() {
     const someoneIsTyping = useOthers((others) =>
@@ -25,8 +27,12 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
   const agendaItems = useStorage((root) => root.agendaItems);
 
   const addAgendaItem = useMutation(({ storage }, text) => {
-    console.log('agendaItems', storage.get('agendaItems'));
-    storage.get('agendaItems').push({ text });
+    storage.get('agendaItems')?.push(new LiveObject({ text }));
+    // console.log("storage.get('agendaItems')", storage.get('agendaItems'));
+    // console.log('agendaItems', agendaItems);
+    // const storageFallback = storage.get('agendaItems') || [];
+    // storage.set('agendaItems', [...storageFallback, new LiveObject({ text })]);
+    // storage.set('agendaItems', [...storageFallback, { text }]);
   }, []);
 
   const deleteAgendaItem = useMutation(({ storage }, index) => {

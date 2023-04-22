@@ -26,14 +26,20 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
   const updateMyPresence = useUpdateMyPresence();
   const todos = useStorage((root) => root.todos);
 
-  const addTodo = useMutation(({ storage }, text) => {
-    storage.get('todos').push(new LiveObject({ text }));
-    console.log('todos', storage.get('todos'));
-  }, []);
-
   // const addTodo = useMutation(({ storage }, text) => {
-  //   storage.get('todos').push(new LiveObject({ text }));
+  //   // console.log({ todos });
+  //   const storageFallback = storage.get('todos') || [];
+  //   // console.log('pushing', pushing);
+  //   storage.set('todos', [...storageFallback, { text }]);
+  //   // pushing?.push(new LiveObject({ text }));
+  //   // console.log('todos', storage.get('todos'));
   // }, []);
+
+  const addTodo = useMutation(({ storage }, text) => {
+    console.log(todos);
+    console.log({ selectedRoomId });
+    storage.get('todos').push(new LiveObject({ text }));
+  }, []);
 
   const deleteTodo = useMutation(({ storage }, index) => {
     storage.get('todos').delete(index);

@@ -6,6 +6,11 @@ const client = createClient({
     'pk_dev_JMMIZJW_JvYGqfhcz5nQzLFQZjjGga3NpRheMFhXAU1fkky-rT3rRucTHWavILAW',
 });
 
+// type Storage = {
+//   // animals: LiveList<string>,
+//   // ...
+// };
+
 export const {
   suspense: {
     RoomProvider,
