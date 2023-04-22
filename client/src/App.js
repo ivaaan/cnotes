@@ -8,26 +8,75 @@ import SketchPad from './components/SketchPad';
 import { RoomProvider } from './liveblocks.config';
 import { LiveList, LiveMap } from '@liveblocks/client';
 import './App.css';
-// import { GoogleOAuthProvider } from '@react-oauth/google';
-import { gapi } from 'gapi-script';
-import Login from './components/Login';
-const clientId =
-  '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com';
+import jwt_decode from 'jwt-decode';
+// import { GoogleOAuthProvider } from '@react-oauth/google'
+// import { getData } from './google.service';
 
 export default function App() {
   const [calendarEvents, setCalendarEvents] = useState([]);
   const [selectedRoomId, setSelectedRoomId] = useState('todo');
   const [selectedEventName, setSelectedEventName] = useState(null);
+  const [user, setUser] = useState({});
+
+  function handleCallbackResponse(response) {
+    // console.log('Encoded JWT ID token: ', response.credential);
+    let userObject = jwt_decode(response.credential);
+    console.log(userObject);
+    setUser(userObject);
+    document.getElementById('signInDiv').hidden = true;
+  }
+
+  function handleSignOut(event) {
+    setUser({});
+    document.getElementById('signInDiv').hidden = false;
+  }
+
+  // function calNewFunc() {
+  //   getData();
+  //   console.log('calNewFunc()', getData());
+  // }
 
   useEffect(() => {
-    function start() {
-      gapi.client.init({
-        clientId: clientId,
-        scope: '',
-      });
-    }
+    // /* global google */
+    window.google.accounts.id.initialize({
+      client_id:
+        '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com',
+      callback: handleCallbackResponse,
+    });
 
-    gapi.load('client:auth2', start);
+    window.google.accounts.id.prompt();
+
+    window.google.accounts.id.renderButton(
+      document.getElementById('signInDiv'),
+      {
+        theme: 'outline',
+        size: 'large',
+      }
+    );
+
+    // This method request the oauth consent for the passed in google account.
+    // function oauthSignIn(googleId) {
+    //   const client = window.google.accounts.oauth2.initTokenClient({
+    //     client_id:
+    //       '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com',
+    //     scope: 'https://www.googleapis.com/auth/calendar.readonly',
+    //     hint: googleId,
+    //     prompt: '', // Specified as an empty string to auto select the account which we have already consented for use.
+    //     callback: (tokenResponse) => {
+    //       access_token = tokenResponse.access_token;
+    //       onOneTapSignIn(access_token); // Reuse the token whichever way you want
+    //     },
+    //   });
+    //   client.requestAccessToken();
+    // }
+
+    const client = window.google.accounts.oauth2.initTokenClient({
+      client_id:
+        '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com',
+      callback: 'onTokenResponse',
+      scope: 'https://www.googleapis.com/auth/calendar.readonly',
+    });
+    client.requestAccessToken();
 
     getCalendarEvents()
       .then((response) => response.json())
@@ -52,7 +101,16 @@ export default function App() {
         }
       >
         <div className='header-container'>
-          <Login />
+          <div id='signInDiv'></div>
+          {Object.keys(user).length != 0 && (
+            <button onClick={(e) => handleSignOut(e)}>Sign out</button>
+          )}
+          {user && (
+            <div>
+              <img src={user.picture}></img>
+              <h1>{user.name}</h1>
+            </div>
+          )}
           <Header
             selectedRoomId={selectedRoomId}
             selectedEventName={selectedEventName}

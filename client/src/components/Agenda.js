@@ -25,7 +25,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
   const agendaItems = useStorage((root) => root.agendaItems);
 
   const addAgendaItem = useMutation(({ storage }, text) => {
-    // console.log(storage.get('agendaItems'));
+    console.log('agendaItems', storage.get('agendaItems'));
     storage.get('agendaItems').push({ text });
   }, []);
 
@@ -41,7 +41,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
             <h1 className='text-outside-boxes inside-margin'>Agenda</h1>
             <p className='rounded-box'>
               <div className='inside-margin'>
-                {agendaItems.map((agendaItem, index) => {
+                {agendaItems?.map((agendaItem, index) => {
                   return (
                     <div key={index} className='todo-container'>
                       <input

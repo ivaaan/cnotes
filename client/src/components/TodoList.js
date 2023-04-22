@@ -25,6 +25,7 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
   const todos = useStorage((root) => root.todos);
 
   const addTodo = useMutation(({ storage }, text) => {
+    console.log('todos', storage.get('todos'));
     storage.get('todos').push({ text });
   }, []);
 
@@ -40,7 +41,7 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
             <h1 className='text-outside-boxes inside-margin'>To-Do List</h1>
             <p className='rounded-box'>
               <div className='inside-margin'>
-                {todos.map((todo, index) => {
+                {todos?.map((todo, index) => {
                   return (
                     <div key={index} className='todo-container'>
                       <input
