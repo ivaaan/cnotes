@@ -4,6 +4,7 @@ import {
   useStorage,
   useUpdateMyPresence,
 } from '../liveblocks.config';
+// import { GoogleLogin } from '@react-oauth/google';
 
 export default function Header({ selectedRoomId, selectedEventName }) {
   function WhoIsHere() {
@@ -43,6 +44,28 @@ export default function Header({ selectedRoomId, selectedEventName }) {
           </>
         )}
       </p>
+      {/* <p>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+        />
+        ;
+      </p>
+      <p>
+        <GoogleLogin
+          onSuccess={(credentialResponse) => {
+            console.log(credentialResponse);
+          }}
+          onError={() => {
+            console.log('Login Failed');
+          }}
+          useOneTap
+        />
+      </p> */}
     </>
   );
 }

@@ -8,6 +8,11 @@ import SketchPad from './components/SketchPad';
 import { RoomProvider } from './liveblocks.config';
 import { LiveList, LiveMap } from '@liveblocks/client';
 import './App.css';
+// import { GoogleOAuthProvider } from '@react-oauth/google';
+import { gapi } from 'gapi-script';
+import Login from './components/Login';
+const clientId =
+  '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com';
 
 export default function App() {
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -15,6 +20,15 @@ export default function App() {
   const [selectedEventName, setSelectedEventName] = useState(null);
 
   useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: '',
+      });
+    }
+
+    gapi.load('client:auth2', start);
+
     getCalendarEvents()
       .then((response) => response.json())
       .then((actualData) => setCalendarEvents(actualData))
@@ -25,6 +39,7 @@ export default function App() {
 
   return (
     <>
+      {/* <GoogleOAuthProvider clientId='448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com'> */}
       <RoomProvider
         id={selectedRoomId}
         initialPresence={{}}
@@ -37,6 +52,7 @@ export default function App() {
         }
       >
         <div className='header-container'>
+          <Login />
           <Header
             selectedRoomId={selectedRoomId}
             selectedEventName={selectedEventName}
@@ -59,6 +75,7 @@ export default function App() {
         </div>
         <SketchPad />
       </RoomProvider>
+      {/* </GoogleOAuthProvider> */}
     </>
   );
 }
