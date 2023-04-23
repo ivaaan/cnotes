@@ -41,6 +41,13 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
     storage.get('todos').push(new LiveObject({ text }));
   }, []);
 
+  const toggleTodo = useMutation(({ storage }, index) => {
+    const todo = storage.get('todos').get(index);
+    console.log({ todo });
+    todo?.set('checked', !todo.get('checked'));
+    console.log('AFTER', { todo });
+  }, []);
+
   const deleteTodo = useMutation(({ storage }, index) => {
     storage.get('todos').delete(index);
   }, []);
@@ -56,18 +63,39 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
                 {todos?.map((todo, index) => {
                   return (
                     <div key={index} className='todo-container'>
-                      <input
-                        type='radio'
-                        // checked='checked'
-                        name='radio'
-                      ></input>
-                      <span className='todo'>{todo.text}</span>
-                      <button
-                        className='delete-button'
-                        onClick={() => deleteTodo(index)}
+                      <div
+                        className='todo-toggle-container'
+                        onClick={() => toggleTodo(index)}
                       >
-                        ✕
-                      </button>
+                        <input
+                          type='checkbox'
+                          name='checkbox'
+                          checked={todo.checked ? true : false}
+                          style={{
+                            cursor: 'pointer',
+                            textDecoration: todo.checked
+                              ? 'line-through'
+                              : undefined,
+                          }}
+                        ></input>
+                        <span
+                          className='todo'
+                          style={{
+                            cursor: 'pointer',
+                            textDecoration: todo.checked
+                              ? 'line-through'
+                              : undefined,
+                          }}
+                        >
+                          {todo.text}
+                        </span>
+                        <button
+                          className='delete-button'
+                          onClick={() => deleteTodo(index)}
+                        >
+                          ✕
+                        </button>
+                      </div>
                     </div>
                   );
                 })}

@@ -97,11 +97,11 @@ export default function App() {
           agendaItems: new LiveList(),
           shapes: new LiveMap(),
 
-          fruitsByName: new LiveMap([
-            ['apple', '🍎'],
-            ['banana', '🍌'],
-            ['cherry', '🍒'],
-          ]),
+          // fruitsByName: new LiveMap([
+          //   ['apple', '🍎'],
+          //   ['banana', '🍌'],
+          //   ['cherry', '🍒'],
+          // ]),
         })}
       >
         {/* initialStorage={() => ({

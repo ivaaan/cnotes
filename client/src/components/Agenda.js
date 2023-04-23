@@ -35,6 +35,11 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
     // storage.set('agendaItems', [...storageFallback, { text }]);
   }, []);
 
+  const toggleAgendaItem = useMutation(({ storage }, index) => {
+    const agenda = storage.get('agendaItems').get(index);
+    agenda?.set('checked', !agenda.get('checked'));
+  }, []);
+
   const deleteAgendaItem = useMutation(({ storage }, index) => {
     storage.get('agendaItems').delete(index);
   }, []);
@@ -50,18 +55,39 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
                 {agendaItems?.map((agendaItem, index) => {
                   return (
                     <div key={index} className='todo-container'>
-                      <input
-                        type='radio'
-                        // checked='checked'
-                        name='radio'
-                      ></input>
-                      <span className='todo'>{agendaItem.text}</span>
-                      <button
-                        className='delete-button'
-                        onClick={() => deleteAgendaItem(index)}
+                      <div
+                        className='agenda-toggle-container'
+                        onClick={() => toggleAgendaItem(index)}
                       >
-                        ✕
-                      </button>
+                        <input
+                          type='checkbox'
+                          name='checkbox'
+                          checked={agendaItem.checked ? true : false}
+                          style={{
+                            cursor: 'pointer',
+                            textDecoration: agendaItem.checked
+                              ? 'line-through'
+                              : undefined,
+                          }}
+                        ></input>
+                        <span
+                          className='todo'
+                          style={{
+                            cursor: 'pointer',
+                            textDecoration: agendaItem.checked
+                              ? 'line-through'
+                              : undefined,
+                          }}
+                        >
+                          {agendaItem.text}
+                        </span>
+                        <button
+                          className='delete-button'
+                          onClick={() => deleteAgendaItem(index)}
+                        >
+                          ✕
+                        </button>
+                      </div>
                     </div>
                   );
                 })}

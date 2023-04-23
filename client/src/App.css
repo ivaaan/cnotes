@@ -47,6 +47,10 @@ h1 {
   letter-spacing: 0.0038em;
 }
 
+.todo-toggle-container {
+  /* border: 1px greenyellow solid; */
+}
+
 p {
   border: 1px white solid;
   font-size: 1rem;
