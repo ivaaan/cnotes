@@ -4,6 +4,7 @@ export default function Calendar({
   calendarEvents,
   setSelectedRoomId,
   setSelectedEventName,
+  setSelectedEventAttendees,
 }) {
   return (
     <>
@@ -17,6 +18,9 @@ export default function Calendar({
                 onClick={() => {
                   setSelectedRoomId(event.id);
                   setSelectedEventName(event.summary);
+                  // console.log('event in Calendar', event);
+                  console.log('event.attendees in Calendar', event.attendees);
+                  setSelectedEventAttendees(event.attendees);
                 }}
               >
                 <div className='inside-margin'>

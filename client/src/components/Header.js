@@ -6,7 +6,11 @@ import {
 } from '../liveblocks.config';
 // import { GoogleLogin } from '@react-oauth/google';
 
-export default function Header({ selectedRoomId, selectedEventName }) {
+export default function Header({
+  selectedRoomId,
+  selectedEventName,
+  selectedEventAttendees,
+}) {
   function WhoIsHere() {
     const userCount = useOthers((others) => others.length);
 
@@ -38,6 +42,21 @@ export default function Header({ selectedRoomId, selectedEventName }) {
             <h1 className='text-outside-boxes inside-margin'>
               Team notes for {selectedEventName} event
             </h1>
+            {selectedEventAttendees ? (
+              <p className='text-outside-boxes inside-margin'>
+                Team members:
+                {selectedEventAttendees.map((attendee) => {
+                  {
+                    console.log(attendee.email);
+                    return <li>{attendee.email}</li>;
+                  }
+                })}
+              </p>
+            ) : (
+              <p className='text-outside-boxes inside-margin'>
+                This calendar event does not have any attendees yet.
+              </p>
+            )}
             <p className='text-outside-boxes inside-margin'>
               <WhoIsHere />
             </p>

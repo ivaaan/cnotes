@@ -18,6 +18,7 @@ export default function App() {
   const [calendarEvents, setCalendarEvents] = useState([]);
   const [selectedRoomId, setSelectedRoomId] = useState('todo');
   const [selectedEventName, setSelectedEventName] = useState(null);
+  const [selectedEventAttendees, setSelectedEventAttendees] = useState([]);
   const [user, setUser] = useState({});
 
   function handleCallbackResponse(response) {
@@ -137,8 +138,10 @@ export default function App() {
               </div>
             )}
             <Header
+              calendarEvents={calendarEvents}
               selectedRoomId={selectedRoomId}
               selectedEventName={selectedEventName}
+              selectedEventAttendees={selectedEventAttendees}
             />
           </div>
           <div className='container'>
@@ -146,6 +149,7 @@ export default function App() {
               calendarEvents={calendarEvents}
               setSelectedRoomId={setSelectedRoomId}
               setSelectedEventName={setSelectedEventName}
+              setSelectedEventAttendees={setSelectedEventAttendees}
             />
             <Agenda
               selectedRoomId={selectedRoomId}
