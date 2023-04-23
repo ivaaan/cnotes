@@ -9,7 +9,12 @@ import {
 
 import { LiveList, LiveObject } from '@liveblocks/client';
 
-export default function TodoList({ selectedRoomId, selectedEventName }) {
+export default function TodoList({
+  selectedRoomId,
+  selectedEventName,
+  selectedEventAttendees,
+  user,
+}) {
   function SomeoneIsTyping() {
     const someoneIsTyping = useOthers((others) =>
       others.some((other) => other.presence.isTyping)
@@ -25,6 +30,7 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
   const [draft, setDraft] = useState('');
   const updateMyPresence = useUpdateMyPresence();
   const todos = useStorage((root) => root.todos);
+  // const currentUser = 'diykarelia@gmail.com';
 
   // const addTodo = useMutation(({ storage }, text) => {
   //   // console.log({ todos });
@@ -36,16 +42,18 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
   // }, []);
 
   const addTodo = useMutation(({ storage }, text) => {
-    console.log(todos);
-    console.log({ selectedRoomId });
-    storage.get('todos').push(new LiveObject({ text }));
+    // console.log(todos);
+    // console.log({ selectedRoomId });
+    storage.get('todos').push(new LiveObject({ text, assignee: user.email }));
+    // storage.get('todos').push(new LiveObject({ text}));
   }, []);
 
   const toggleTodo = useMutation(({ storage }, index) => {
     const todo = storage.get('todos').get(index);
-    console.log({ todo });
+    // console.log({ todo });
+    // console.log('printing user', { user });
     todo?.set('checked', !todo.get('checked'));
-    console.log('AFTER', { todo });
+    // console.log('AFTER', { todo });
   }, []);
 
   const deleteTodo = useMutation(({ storage }, index) => {
@@ -88,6 +96,8 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
                           }}
                         >
                           {todo.text}
+                          {'  '}
+                          {todo.assignee ? <>(🙋🏻: {todo.assignee})</> : <></>}
                         </span>
                         <button
                           className='delete-button'
@@ -117,6 +127,26 @@ export default function TodoList({ selectedRoomId, selectedEventName }) {
                     }}
                     onBlur={() => updateMyPresence({ isTyping: false })}
                   />
+                  {selectedEventAttendees ? (
+                    <p>
+                      Assign to:{' '}
+                      <select name='todo-assignee' id='todo-assignee'>
+                        <option value='assigned-to-team'></option>
+                        {selectedEventAttendees.map((attendee) => {
+                          {
+                            return (
+                              <option value={attendee.email}>
+                                {attendee.email}
+                              </option>
+                            );
+                          }
+                        })}
+                      </select>
+                    </p>
+                  ) : (
+                    <></>
+                  )}
+
                   <p className='text-regular'>
                     <SomeoneIsTyping />
                   </p>

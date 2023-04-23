@@ -19,13 +19,23 @@ export default function App() {
   const [selectedRoomId, setSelectedRoomId] = useState('todo');
   const [selectedEventName, setSelectedEventName] = useState(null);
   const [selectedEventAttendees, setSelectedEventAttendees] = useState([]);
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    email: 'diykarelia@gmail.com',
+    firstname: 'Ivan',
+    lastname: 'Zoloto',
+  });
 
   function handleCallbackResponse(response) {
     // console.log('Encoded JWT ID token: ', response.credential);
     let userObject = jwt_decode(response.credential);
-    console.log(userObject);
-    setUser(userObject);
+    // console.log('userObject.email', userObject.email);
+    if (userObject.email !== 'diykarelia@gmail.com') {
+      setUser({
+        email: userObject.email,
+        firstname: userObject.given_name,
+        lastname: userObject.family_name,
+      });
+    }
     document.getElementById('signInDiv').hidden = true;
   }
 
@@ -57,29 +67,13 @@ export default function App() {
       }
     );
 
-    // This method request the oauth consent for the passed in google account.
-    // function oauthSignIn(googleId) {
-    //   const client = window.google.accounts.oauth2.initTokenClient({
-    //     client_id:
-    //       '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com',
-    //     scope: 'https://www.googleapis.com/auth/calendar.readonly',
-    //     hint: googleId,
-    //     prompt: '', // Specified as an empty string to auto select the account which we have already consented for use.
-    //     callback: (tokenResponse) => {
-    //       access_token = tokenResponse.access_token;
-    //       onOneTapSignIn(access_token); // Reuse the token whichever way you want
-    //     },
-    //   });
-    //   client.requestAccessToken();
-    // }
-
-    const client = window.google.accounts.oauth2.initTokenClient({
-      client_id:
-        '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com',
-      callback: 'onTokenResponse',
-      scope: 'https://www.googleapis.com/auth/calendar.readonly',
-    });
-    client.requestAccessToken();
+    // const client = window.google.accounts.oauth2.initTokenClient({
+    //   client_id:
+    //     '448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com',
+    //   callback: 'onTokenResponse',
+    //   scope: 'https://www.googleapis.com/auth/calendar.readonly',
+    // });
+    // client.requestAccessToken();
 
     getCalendarEvents()
       .then((response) => response.json())
@@ -158,6 +152,8 @@ export default function App() {
             <TodoList
               selectedRoomId={selectedRoomId}
               selectedEventName={selectedEventName}
+              selectedEventAttendees={selectedEventAttendees}
+              user={user}
             />
           </div>
           {/* <SketchPad /> */}
