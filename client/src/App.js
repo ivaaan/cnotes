@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { Suspense } from 'react';
 import Header from './components/Header';
 import Calendar from './components/Calendar';
 import { getCalendarEvents } from './api.service';
 import Agenda from './components/Agenda';
 import TodoList from './components/TodoList';
 import SketchPad from './components/SketchPad';
+import Loading from './components/Loading';
 import { RoomProvider } from './liveblocks.config';
 import { LiveList, LiveMap } from '@liveblocks/client';
 import './App.css';
@@ -104,7 +106,8 @@ export default function App() {
           // ]),
         })}
       >
-        {/* initialStorage={() => ({
+        <Suspense fallback={<Loading />}>
+          {/* initialStorage={() => ({
            { agendaItems: new LiveList() },
            { todos: new LiveList(['🦁', '🦊', '🐵']) },
            { shapes: new LiveMap() },
@@ -122,38 +125,39 @@ export default function App() {
          })
          }
        > */}
-        <div className='header-container'>
-          <div id='signInDiv'></div>
-          {Object.keys(user).length != 0 && (
-            <button onClick={(e) => handleSignOut(e)}>Sign out</button>
-          )}
-          {user && (
-            <div>
-              <img src={user.picture}></img>
-              <h1>{user.name}</h1>
-            </div>
-          )}
-          <Header
-            selectedRoomId={selectedRoomId}
-            selectedEventName={selectedEventName}
-          />
-        </div>
-        <div className='container'>
-          <Calendar
-            calendarEvents={calendarEvents}
-            setSelectedRoomId={setSelectedRoomId}
-            setSelectedEventName={setSelectedEventName}
-          />
-          <Agenda
-            selectedRoomId={selectedRoomId}
-            selectedEventName={selectedEventName}
-          />
-          <TodoList
-            selectedRoomId={selectedRoomId}
-            selectedEventName={selectedEventName}
-          />
-        </div>
-        {/* <SketchPad /> */}
+          <div className='header-container'>
+            <div id='signInDiv'></div>
+            {Object.keys(user).length != 0 && (
+              <button onClick={(e) => handleSignOut(e)}>Sign out</button>
+            )}
+            {user && (
+              <div>
+                <img src={user.picture}></img>
+                <h1>{user.name}</h1>
+              </div>
+            )}
+            <Header
+              selectedRoomId={selectedRoomId}
+              selectedEventName={selectedEventName}
+            />
+          </div>
+          <div className='container'>
+            <Calendar
+              calendarEvents={calendarEvents}
+              setSelectedRoomId={setSelectedRoomId}
+              setSelectedEventName={setSelectedEventName}
+            />
+            <Agenda
+              selectedRoomId={selectedRoomId}
+              selectedEventName={selectedEventName}
+            />
+            <TodoList
+              selectedRoomId={selectedRoomId}
+              selectedEventName={selectedEventName}
+            />
+          </div>
+          {/* <SketchPad /> */}
+        </Suspense>
       </RoomProvider>
       {/* </GoogleOAuthProvider> */}
     </>
