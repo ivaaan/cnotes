@@ -96,14 +96,13 @@ export default function TodoList({
                           }}
                         >
                           {todo.text}
-                          {'  '}
                           {todo.assignee ? (
                             <>
-                              (🙋🏻:{' '}
                               {todo.assignee === user.email
-                                ? 'me'
-                                : todo.assignee}
-                              )
+                                ? ' (🙋🏻: me)'
+                                : todo.assignee === 'team'
+                                ? ''
+                                : ' (💁🏻‍♀️: ' + todo.assignee + ')'}
                             </>
                           ) : (
                             <></>
@@ -145,7 +144,7 @@ export default function TodoList({
                         id='todo-assignee'
                         ref={selectedEventAttendeeEmail}
                       >
-                        <option value='assigned-to-team'></option>
+                        <option value='team'></option>
                         {selectedEventAttendees.map((attendee) => {
                           {
                             return (
