@@ -23,5 +23,9 @@ export const {
     useHistory,
     useBatch,
     useRoom,
+    useSelf,
+    useOthersMapped,
+    useCanUndo,
+    useCanRedo,
   },
 } = createRoomContext(client);

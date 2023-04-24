@@ -37,11 +37,7 @@ export default function App() {
     <>
       {!user.email ? (
         // {!setSignedIn ? (
-        <LoginSplashscreen
-          // user={user}
-          setUser={setUser}
-          setSignedIn={setSignedIn}
-        />
+        <LoginSplashscreen setUser={setUser} setSignedIn={setSignedIn} />
       ) : (
         <>
           {/* <GoogleOAuthProvider clientId='448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com'> */}

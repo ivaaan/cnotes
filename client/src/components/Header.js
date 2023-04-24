@@ -57,20 +57,19 @@ export default function Header({
           </div>
         </>
       )}
-      <p>
+      <div>
         <h1 className='text-outside-boxes inside-margin'>
-          Select a calendar event
+          {selectedEventName
+            ? 'Team notes for ' + selectedEventName
+            : 'Select a calendar event'}
         </h1>
-      </p>
-      <p>
+      </div>
+      <div>
         {selectedRoomId !== 'todo' && (
           <>
-            <h1 className='text-outside-boxes inside-margin'>
-              Team notes for {selectedEventName} event
-            </h1>
             {selectedEventAttendees ? (
               <p className='text-outside-boxes inside-margin'>
-                Team members:
+                Team members in this calendar event:
                 {selectedEventAttendees.map((attendee) => {
                   {
                     return (
@@ -95,7 +94,7 @@ export default function Header({
             </p>
           </>
         )}
-      </p>
+      </div>
       {/* <p>
         <GoogleLogin
           onSuccess={(credentialResponse) => {

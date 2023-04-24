@@ -8,13 +8,13 @@ export default function LoginSplashscreen({ setUser, setSignedIn }) {
     let userObject = jwt_decode(response.credential);
     setSignedIn(true);
     setUser({
-      email: userObject.email,
-      firstname: userObject.given_name,
-      lastname: userObject.family_name,
+      // email: userObject.email,
+      // firstname: userObject.given_name,
+      // lastname: userObject.family_name,
       // Mock hard-coded user:
-      // email: 'diykarelia@gmail.com',
-      // firstname: 'Ivan',
-      // lastname: 'Zoloto',
+      email: 'diykarelia@gmail.com',
+      firstname: 'Ivan',
+      lastname: 'Zoloto',
     });
     // document.getElementById('signInDiv').hidden = true;
   }
