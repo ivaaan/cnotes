@@ -19,6 +19,28 @@
   background-position: 20% 100%;
 }
 
+div {
+  border: 1px white solid;
+}
+
+.header {
+  vertical-align: middle;
+  display: inline-block;
+  font-family: 'Druk Condensed';
+  font-style: normal;
+  text-transform: uppercase;
+  font-size: 2rem;
+}
+
+.header-right {
+  vertical-align: middle;
+  margin-top: 10px;
+}
+
+.header-logout {
+  cursor: 'pointer';
+}
+
 .splashscreen {
   font-family: 'Druk Condensed';
   font-size: 6rem;
@@ -31,6 +53,12 @@
   margin-top: 100px;
   padding: 5px;
   width: 250px;
+}
+
+.logo-header {
+  vertical-align: middle;
+  margin-top: 10px;
+  width: 100px;
 }
 
 #signInDiv {

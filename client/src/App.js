@@ -34,8 +34,9 @@ export default function App() {
 
   return (
     <>
-      {!user.email && <LoginSplashscreen setUser={setUser} />}
-      {user.email && (
+      {!user.email ? (
+        <LoginSplashscreen user={user} setUser={setUser} />
+      ) : (
         <>
           {/* <GoogleOAuthProvider clientId='448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com'> */}
           <RoomProvider
