@@ -1,15 +1,11 @@
-import {
-  useMutation,
-  useOthers,
-  useStorage,
-  useUpdateMyPresence,
-} from '../liveblocks.config';
-// import { GoogleLogin } from '@react-oauth/google';
+import { useOthers } from '../liveblocks.config';
 
 export default function Header({
+  handleSignOut,
   selectedRoomId,
   selectedEventName,
   selectedEventAttendees,
+  user,
 }) {
   function WhoIsHere() {
     const userCount = useOthers((others) => others.length);
@@ -18,11 +14,11 @@ export default function Header({
       <>
         {userCount > 0 ? (
           <div className='who_is_here'>
-            Team status: 👯 There are {userCount} other users online
+            👯 There are {userCount} other users online
           </div>
         ) : (
           <div className='who_is_here'>
-            Team status: 🙆🏻‍♀️ You are the only user editing these notes right now!
+            🙆🏻‍♀️ You are the only user editing these notes right now!
           </div>
         )}
       </>
@@ -31,6 +27,17 @@ export default function Header({
 
   return (
     <>
+      <div id='signInDiv'></div>
+      {Object.keys(user).length != 0 && (
+        <button onClick={(e) => handleSignOut(e)}>Sign out</button>
+      )}
+      {user && (
+        <div>
+          <h1>
+            {user.firstname} {user.lastname}
+          </h1>
+        </div>
+      )}
       <p>
         <h1 className='text-outside-boxes inside-margin'>
           Select a calendar event
@@ -47,8 +54,15 @@ export default function Header({
                 Team members:
                 {selectedEventAttendees.map((attendee) => {
                   {
-                    console.log(attendee.email);
-                    return <li>{attendee.email}</li>;
+                    return (
+                      <>
+                        {attendee.email === user.email ? (
+                          <></>
+                        ) : (
+                          <li>{attendee.email}</li>
+                        )}
+                      </>
+                    );
                   }
                 })}
               </p>

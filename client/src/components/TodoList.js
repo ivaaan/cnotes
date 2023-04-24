@@ -1,4 +1,4 @@
-import { useState, startTransition } from 'react';
+import { useState, startTransition, useRef } from 'react';
 
 import {
   useMutation,
@@ -28,6 +28,7 @@ export default function TodoList({
   }
 
   const [draft, setDraft] = useState('');
+  const selectedEventAttendeeEmail = useRef();
   const updateMyPresence = useUpdateMyPresence();
   const todos = useStorage((root) => root.todos);
   // const currentUser = 'diykarelia@gmail.com';
@@ -42,18 +43,17 @@ export default function TodoList({
   // }, []);
 
   const addTodo = useMutation(({ storage }, text) => {
-    // console.log(todos);
-    // console.log({ selectedRoomId });
-    storage.get('todos').push(new LiveObject({ text, assignee: user.email }));
-    // storage.get('todos').push(new LiveObject({ text}));
+    storage.get('todos').push(
+      new LiveObject({
+        text,
+        assignee: selectedEventAttendeeEmail.current.value,
+      })
+    );
   }, []);
 
   const toggleTodo = useMutation(({ storage }, index) => {
     const todo = storage.get('todos').get(index);
-    // console.log({ todo });
-    // console.log('printing user', { user });
     todo?.set('checked', !todo.get('checked'));
-    // console.log('AFTER', { todo });
   }, []);
 
   const deleteTodo = useMutation(({ storage }, index) => {
@@ -97,7 +97,17 @@ export default function TodoList({
                         >
                           {todo.text}
                           {'  '}
-                          {todo.assignee ? <>(🙋🏻: {todo.assignee})</> : <></>}
+                          {todo.assignee ? (
+                            <>
+                              (🙋🏻:{' '}
+                              {todo.assignee === user.email
+                                ? 'me'
+                                : todo.assignee}
+                              )
+                            </>
+                          ) : (
+                            <></>
+                          )}
                         </span>
                         <button
                           className='delete-button'
@@ -130,13 +140,19 @@ export default function TodoList({
                   {selectedEventAttendees ? (
                     <p>
                       Assign to:{' '}
-                      <select name='todo-assignee' id='todo-assignee'>
+                      <select
+                        name='todo-assignee'
+                        id='todo-assignee'
+                        ref={selectedEventAttendeeEmail}
+                      >
                         <option value='assigned-to-team'></option>
                         {selectedEventAttendees.map((attendee) => {
                           {
                             return (
                               <option value={attendee.email}>
-                                {attendee.email}
+                                {attendee.email === user.email
+                                  ? 'myself'
+                                  : attendee.email}
                               </option>
                             );
                           }

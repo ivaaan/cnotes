@@ -11,8 +11,6 @@ import { RoomProvider } from './liveblocks.config';
 import { LiveList, LiveMap } from '@liveblocks/client';
 import './App.css';
 import jwt_decode from 'jwt-decode';
-// import { GoogleOAuthProvider } from '@react-oauth/google'
-// import { getData } from './google.service';
 
 export default function App() {
   const [calendarEvents, setCalendarEvents] = useState([]);
@@ -26,9 +24,7 @@ export default function App() {
   });
 
   function handleCallbackResponse(response) {
-    // console.log('Encoded JWT ID token: ', response.credential);
     let userObject = jwt_decode(response.credential);
-    // console.log('userObject.email', userObject.email);
     if (userObject.email !== 'diykarelia@gmail.com') {
       setUser({
         email: userObject.email,
@@ -43,11 +39,6 @@ export default function App() {
     setUser({});
     document.getElementById('signInDiv').hidden = false;
   }
-
-  // function calNewFunc() {
-  //   getData();
-  //   console.log('calNewFunc()', getData());
-  // }
 
   useEffect(() => {
     // /* global google */
@@ -93,49 +84,17 @@ export default function App() {
           todos: new LiveList(),
           agendaItems: new LiveList(),
           shapes: new LiveMap(),
-
-          // fruitsByName: new LiveMap([
-          //   ['apple', '🍎'],
-          //   ['banana', '🍌'],
-          //   ['cherry', '🍒'],
-          // ]),
         })}
       >
         <Suspense fallback={<Loading />}>
-          {/* initialStorage={() => ({
-           { agendaItems: new LiveList() },
-           { todos: new LiveList(['🦁', '🦊', '🐵']) },
-           { shapes: new LiveMap() },
-           {
-             fruitsByName: new LiveMap([
-             ['apple', '🍎'],
-               ['banana', '🍌'],
-               ['cherry', '🍒'],
-             ]),
-           },
-           { animals: new LiveList(['🦁', '🦊', '🐵']) },
-           {
-             animalAgenda: new LiveList(['agenda 🦁', 'hello 🦊', ' world 🐵']),
-           }
-         })
-         }
-       > */}
           <div className='header-container'>
-            <div id='signInDiv'></div>
-            {Object.keys(user).length != 0 && (
-              <button onClick={(e) => handleSignOut(e)}>Sign out</button>
-            )}
-            {user && (
-              <div>
-                <img src={user.picture}></img>
-                <h1>{user.name}</h1>
-              </div>
-            )}
             <Header
+              handleSignOut={handleSignOut}
               calendarEvents={calendarEvents}
               selectedRoomId={selectedRoomId}
               selectedEventName={selectedEventName}
               selectedEventAttendees={selectedEventAttendees}
+              user={user}
             />
           </div>
           <div className='container'>
