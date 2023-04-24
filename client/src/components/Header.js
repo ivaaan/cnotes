@@ -15,7 +15,7 @@ export default function Header({
     // Resetting the user to default - change to {} when we go to prod
     setUser({});
     // Hiding the google HTML form
-    document.getElementById('signInDiv').hidden = false;
+    // document.getElementById('signInDiv').hidden = false;
   }
 
   function WhoIsHere() {

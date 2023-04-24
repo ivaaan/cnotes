@@ -22,6 +22,7 @@ export default function App() {
     // firstname: 'Ivan',
     // lastname: 'Zoloto',
   });
+  const [signedIn, setSignedIn] = useState(false);
 
   useEffect(() => {
     getCalendarEvents()
@@ -35,7 +36,12 @@ export default function App() {
   return (
     <>
       {!user.email ? (
-        <LoginSplashscreen user={user} setUser={setUser} />
+        // {!setSignedIn ? (
+        <LoginSplashscreen
+          // user={user}
+          setUser={setUser}
+          setSignedIn={setSignedIn}
+        />
       ) : (
         <>
           {/* <GoogleOAuthProvider clientId='448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com'> */}

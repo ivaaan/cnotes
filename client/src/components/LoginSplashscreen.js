@@ -2,16 +2,21 @@ import { useEffect } from 'react';
 import jwt_decode from 'jwt-decode';
 import logo from '../cnotes-logo.png';
 
-export default function LoginSplashscreen({ setUser }) {
+export default function LoginSplashscreen({ setUser, setSignedIn }) {
   function handleCallbackResponse(response) {
     console.log('Encoded JWT ID token: ' + response.credential);
     let userObject = jwt_decode(response.credential);
+    setSignedIn(true);
     setUser({
       email: userObject.email,
       firstname: userObject.given_name,
       lastname: userObject.family_name,
+      // Mock hard-coded user:
+      // email: 'diykarelia@gmail.com',
+      // firstname: 'Ivan',
+      // lastname: 'Zoloto',
     });
-    document.getElementById('signInDiv').hidden = true;
+    // document.getElementById('signInDiv').hidden = true;
   }
 
   useEffect(() => {
