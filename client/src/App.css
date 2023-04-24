@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Druk Condensed';
+  src: url('./fonts/DrukCondCy-Super-Web.woff2') format('woff2');
+}
+
 :root {
   /* --box-stroke: linear-gradient(
     to bottom,
@@ -14,12 +19,23 @@
   background-position: 20% 100%;
 }
 
+.splashscreen {
+  font-family: 'Druk Condensed';
+  font-size: 6rem;
+  font-weight: 600;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
 .logo-splashscreen {
+  margin-top: 100px;
   padding: 5px;
   width: 250px;
 }
 
 #signInDiv {
+  margin-top: 30px;
+
   /* border: 1px white solid; */
 }
 

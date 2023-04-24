@@ -37,7 +37,7 @@ export default function LoginSplashscreen({ setUser }) {
     <>
       <div className='center-container'>
         <img className='logo-splashscreen' src={logo} />
-        <h1 className='text-outside-boxes'>Welcome to CNotes</h1>
+        <h1 className='splashscreen text-outside-boxes'>Welcome to CNotes</h1>
         <h2 className='text-outside-boxes'>
           Your go-to app for taking notes and creating to-dos during work calls.
         </h2>
