@@ -20,5 +20,8 @@ export const {
     useMyPresence,
     useUpdateMyPresence,
     useMap,
+    useHistory,
+    useBatch,
+    useRoom,
   },
 } = createRoomContext(client);
