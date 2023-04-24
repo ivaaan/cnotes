@@ -14,8 +14,13 @@
   background-position: 20% 100%;
 }
 
-div {
-  border: 1px white solid;
+.logo-splashscreen {
+  padding: 5px;
+  width: 250px;
+}
+
+#signInDiv {
+  /* border: 1px white solid; */
 }
 
 .header-container {
