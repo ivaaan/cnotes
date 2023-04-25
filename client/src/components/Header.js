@@ -48,7 +48,7 @@ export default function Header({
             <p className='text-outside-boxes inside-margin'>
               Logged in as: {user.firstname} {user.lastname}
               <span
-                className='header-logout text-outside-boxes inside-margin'
+                className='button-inter header-logout text-outside-boxes inside-margin'
                 onClick={(e) => handleSignOut(e)}
               >
                 Sign out
@@ -58,10 +58,13 @@ export default function Header({
         </>
       )}
       <div>
-        <h1 className='text-outside-boxes inside-margin'>
+        <h1 className='druk text-outside-boxes inside-margin'>
           {selectedEventName
-            ? 'Team notes for ' + selectedEventName
-            : 'Select a calendar event'}
+            ? 'Team notes for:'
+            : '👇🏻 Select a calendar event:'}
+        </h1>
+        <h1 className='text-outside-boxes inside-margin'>
+          {selectedEventName ? selectedEventName : ''}
         </h1>
       </div>
       <div>

@@ -21,6 +21,7 @@ function Canvas({ shapes }) {
         x: getRandomInt(300),
         y: getRandomInt(300),
         fill: getRandomColor(),
+        text: 'shape test',
       };
       shapes.set(shapeId, rectangle);
       setPresence({ selectedShape: shapeId }, { addToHistory: true });
@@ -103,7 +104,7 @@ function Canvas({ shapes }) {
 }
 
 const Rectangle = ({ shape, id, onShapePointerDown, selectionColor }) => {
-  const { x, y, fill } = shape;
+  const { x, y, fill, text } = shape;
 
   return (
     <div
@@ -114,7 +115,9 @@ const Rectangle = ({ shape, id, onShapePointerDown, selectionColor }) => {
         backgroundColor: fill ? fill : '#CCC',
         borderColor: selectionColor || 'transparent',
       }}
-    ></div>
+    >
+      {text}
+    </div>
   );
 };
 
@@ -150,7 +153,9 @@ export default function SketchPad({ selectedRoomId, selectedEventName }) {
     <>
       {selectedRoomId !== 'todo' && (
         <div>
-          <h1 className='text-outside-boxes center-container'>SketchPad</h1>
+          <h1 className='druk text-outside-boxes center-container'>
+            SketchPad
+          </h1>
           <p className='rounded-box sketchpad'>
             <Canvas shapes={shapes} />
           </p>

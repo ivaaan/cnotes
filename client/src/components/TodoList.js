@@ -65,15 +65,20 @@ export default function TodoList({
       {selectedRoomId !== 'todo' && (
         <>
           <div>
-            <h1 className='text-outside-boxes inside-margin'>To-Do List</h1>
-            <p className='rounded-box'>
+            <h1 className='druk text-outside-boxes inside-margin'>
+              To-Do List
+            </h1>
+            <p className='container-minimal container-agenda'>
               <div className='inside-margin'>
                 {todos?.map((todo, index) => {
                   return (
                     <div key={index} className='todo-container'>
                       <div
-                        className='todo-toggle-container'
+                        className='checkbox-rect todo-toggle-container text-regular'
                         onClick={() => toggleTodo(index)}
+                        style={{
+                          color: todo.checked ? 'grey' : undefined,
+                        }}
                       >
                         <input
                           type='checkbox'
@@ -86,7 +91,7 @@ export default function TodoList({
                               : undefined,
                           }}
                         ></input>
-                        <span
+                        <label
                           className='todo'
                           style={{
                             cursor: 'pointer',
@@ -107,9 +112,9 @@ export default function TodoList({
                           ) : (
                             <></>
                           )}
-                        </span>
+                        </label>
                         <button
-                          className='delete-button'
+                          className='button-delete delete-button'
                           onClick={() => deleteTodo(index)}
                         >
                           ✕
@@ -119,7 +124,36 @@ export default function TodoList({
                   );
                 })}
                 <div className='center-container'>
+                  {selectedEventAttendees ? (
+                    <>
+                      <p>
+                        Assigning to: {'   '}
+                        <select
+                          className='assign-to-selector'
+                          name='todo-assignee'
+                          id='todo-assignee'
+                          ref={selectedEventAttendeeEmail}
+                        >
+                          <option value='team'></option>
+                          {selectedEventAttendees.map((attendee) => {
+                            {
+                              return (
+                                <option value={attendee.email}>
+                                  {attendee.email === user.email
+                                    ? 'myself'
+                                    : attendee.email}
+                                </option>
+                              );
+                            }
+                          })}
+                        </select>
+                      </p>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                   <input
+                    className='todo-input'
                     type='text'
                     placeholder='Add a new task here'
                     value={draft}
@@ -136,31 +170,6 @@ export default function TodoList({
                     }}
                     onBlur={() => updateMyPresence({ isTyping: false })}
                   />
-                  {selectedEventAttendees ? (
-                    <p>
-                      Assign to:{' '}
-                      <select
-                        name='todo-assignee'
-                        id='todo-assignee'
-                        ref={selectedEventAttendeeEmail}
-                      >
-                        <option value='team'></option>
-                        {selectedEventAttendees.map((attendee) => {
-                          {
-                            return (
-                              <option value={attendee.email}>
-                                {attendee.email === user.email
-                                  ? 'myself'
-                                  : attendee.email}
-                              </option>
-                            );
-                          }
-                        })}
-                      </select>
-                    </p>
-                  ) : (
-                    <></>
-                  )}
 
                   <p className='text-regular'>
                     <SomeoneIsTyping />

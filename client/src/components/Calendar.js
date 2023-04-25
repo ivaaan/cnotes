@@ -10,17 +10,18 @@ export default function Calendar({
     <>
       {calendarEvents.length > 0 ? (
         <p>
-          <div className='rounded-box cal'>
+          <div className=''>
             {calendarEvents.map((event) => (
               <div
-                className='inside-margin rounded-box-cal-event'
+                className='inside-margin button-inter cal cal-single-event'
                 key={event.id}
-                onClick={() => {
+                onClick={(e) => {
                   setSelectedRoomId(event.id);
                   setSelectedEventName(event.summary);
                   // console.log('event in Calendar', event);
                   console.log('event.attendees in Calendar', event.attendees);
                   setSelectedEventAttendees(event.attendees);
+                  e.currentTarget.classList.toggle('event-was-selected');
                 }}
               >
                 <div className='inside-margin'>

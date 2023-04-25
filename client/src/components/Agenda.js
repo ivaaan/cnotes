@@ -49,19 +49,23 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
       {selectedRoomId !== 'todo' && (
         <>
           <div>
-            <h1 className='text-outside-boxes inside-margin'>Agenda</h1>
-            <p className='rounded-box'>
+            <h1 className='druk text-outside-boxes inside-margin'>Agenda</h1>
+            <p className='container-agenda'>
               <div className='inside-margin'>
                 {agendaItems?.map((agendaItem, index) => {
                   return (
                     <div key={index} className='todo-container'>
                       <div
-                        className='agenda-toggle-container'
+                        className='checkbox-circle todo-toggle-container text-regular'
                         onClick={() => toggleAgendaItem(index)}
+                        style={{
+                          color: agendaItem.checked ? 'grey' : undefined,
+                        }}
                       >
                         <input
                           type='checkbox'
                           name='checkbox'
+                          className=''
                           checked={agendaItem.checked ? true : false}
                           style={{
                             cursor: 'pointer',
@@ -70,7 +74,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
                               : undefined,
                           }}
                         ></input>
-                        <span
+                        <label
                           className='todo'
                           style={{
                             cursor: 'pointer',
@@ -80,9 +84,9 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
                           }}
                         >
                           {agendaItem.text}
-                        </span>
+                        </label>
                         <button
-                          className='delete-button'
+                          className='button-delete delete-button'
                           onClick={() => deleteAgendaItem(index)}
                         >
                           ✕
@@ -93,6 +97,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
                 })}
                 <div className='center-container'>
                   <input
+                    className='agenda-input'
                     type='text'
                     placeholder='Add a new agenda item'
                     value={draftAgenda}

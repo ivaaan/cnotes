@@ -9,7 +9,7 @@ import TodoList from './components/TodoList';
 import SketchPad from './components/SketchPad';
 import Loading from './components/Loading';
 import { RoomProvider } from './liveblocks.config';
-import { LiveList, LiveMap } from '@liveblocks/client';
+import { LiveList, LiveMap, LiveObject } from '@liveblocks/client';
 import './App.css';
 
 export default function App() {
@@ -18,9 +18,9 @@ export default function App() {
   const [selectedEventName, setSelectedEventName] = useState(null);
   const [selectedEventAttendees, setSelectedEventAttendees] = useState([]);
   const [user, setUser] = useState({
-    // email: 'diykarelia@gmail.com',
-    // firstname: 'Ivan',
-    // lastname: 'Zoloto',
+    email: 'diykarelia@gmail.com',
+    firstname: 'Ivan',
+    lastname: 'Zoloto',
   });
   const [signedIn, setSignedIn] = useState(false);
 
@@ -48,6 +48,8 @@ export default function App() {
               todos: new LiveList(),
               agendaItems: new LiveList(),
               shapes: new LiveMap(),
+              // layers: new LiveMap(),
+              // layerIds: new LiveList(),
             })}
           >
             <Suspense fallback={<Loading />}>
