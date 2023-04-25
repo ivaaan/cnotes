@@ -81,6 +81,7 @@ export default function App() {
                   user={user}
                 />
               </div>
+
               <SketchPad selectedRoomId={selectedRoomId} />
             </Suspense>
           </RoomProvider>

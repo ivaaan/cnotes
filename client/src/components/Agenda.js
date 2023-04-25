@@ -48,7 +48,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
     <>
       {selectedRoomId !== 'todo' && (
         <>
-          <div>
+          <div className='agenda-test'>
             <h1 className='druk text-outside-boxes inside-margin'>Agenda</h1>
             <p className='container-agenda'>
               <div className='inside-margin'>

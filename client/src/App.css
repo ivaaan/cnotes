@@ -118,7 +118,7 @@ h1 {
 }
 
 .event-was-selected {
-  background-color: salmon;
+  background-color: whitesmoke;
 }
 
 p {
@@ -139,11 +139,11 @@ p {
 
 .rounded-box {
   /* opacity: 0; */
-  min-height: 300px;
-  border-radius: 15px;
-  background-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0px 12px 24px rgba(0, 0, 0);
-  backdrop-filter: blur(10px);
+  /* min-height: 300px; */
+  /* border-radius: 15px; */
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  /* box-shadow: 0px 12px 24px rgba(0, 0, 0); */
+  /* backdrop-filter: blur(10px); */
 }
 
 .cal {
@@ -197,9 +197,9 @@ p {
 }
 
 .canvas {
-  background-color: rgba(255, 255, 255, 0.2);
+  /* background-color: rgba(255, 255, 255, 0.2); */
 
-  border-radius: 15px;
+  /* border-radius: 15px; */
   touch-action: none;
   /* margin-left: 1%; */
   /* margin-right: 1%; */
@@ -505,3 +505,30 @@ p {
   box-shadow: 0 0 0 1px #000;
 }
 /* checkbox-rect end */
+
+.rectangle {
+  box-shadow: 3px 3px 7px rgba(0, 0, 0, 0.7);
+  word-break: break-all;
+  overflow-y: scroll;
+}
+
+.cal-container {
+  /* border: #8ee277 1px solid; */
+  /* min-height: 300px; */
+  max-height: 395px;
+  overflow-y: auto;
+  /* background-color: rgba(255, 255, 255, 0.2); */
+  -webkit-mask-image: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    from(rgba(0, 0, 0, 1)),
+    to(rgba(0, 0, 0, 0.5))
+  );
+}
+
+.agenda-test {
+  /* border: #8ee277 1px solid; */
+  /* min-height: 300px; */
+  /* overflow-y: scroll; */
+}

@@ -68,7 +68,7 @@ export default function TodoList({
             <h1 className='druk text-outside-boxes inside-margin'>
               To-Do List
             </h1>
-            <p className='container-minimal container-agenda'>
+            <p className='container-agenda'>
               <div className='inside-margin'>
                 {todos?.map((todo, index) => {
                   return (

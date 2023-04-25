@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   useMap,
   useMyPresence,
+  useUpdateMyPresence,
   useOthers,
   useHistory,
   useBatch,
@@ -10,9 +11,11 @@ import {
 function Canvas({ shapes }) {
   const [isDragging, setIsDragging] = useState(false);
   const [{ selectedShape }, setPresence] = useMyPresence();
+  const updateMyPresence = useUpdateMyPresence();
   const others = useOthers();
   const history = useHistory();
   const batch = useBatch();
+  const [draftPostit, setDraftPostit] = useState('');
 
   const insertRectangle = () => {
     batch(() => {
@@ -21,10 +24,12 @@ function Canvas({ shapes }) {
         x: getRandomInt(300),
         y: getRandomInt(300),
         fill: getRandomColor(),
-        text: 'shape test',
+        text: draftPostit,
+        // text: { draftPostit },
       };
       shapes.set(shapeId, rectangle);
       setPresence({ selectedShape: shapeId }, { addToHistory: true });
+      // setDraftPostit('');
     });
   };
 
@@ -92,7 +97,26 @@ function Canvas({ shapes }) {
         })}
       </div>
       <div className='toolbar'>
-        <button onClick={insertRectangle}>Rectangle</button>
+        {/* <p>{draftPostit} test</p> */}
+        <input
+          className='postit-input'
+          type='text'
+          placeholder='Type text here'
+          // value={draftPostit}
+          onChange={(e) => {
+            setDraftPostit(e.target.value);
+            updateMyPresence({ isTyping: true });
+          }}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              updateMyPresence({ isTyping: false });
+              setDraftPostit(e.target.value);
+              insertRectangle();
+            }
+          }}
+          // onBlur={() => updateMyPresence({ isTyping: false })}
+        />
+        <button onClick={insertRectangle}>Stick it!</button>
         <button onClick={deleteRectangle} disabled={selectedShape == null}>
           Delete
         </button>
@@ -154,9 +178,9 @@ export default function SketchPad({ selectedRoomId, selectedEventName }) {
       {selectedRoomId !== 'todo' && (
         <div>
           <h1 className='druk text-outside-boxes center-container'>
-            SketchPad
+            Sticky Notes
           </h1>
-          <p className='rounded-box sketchpad'>
+          <p className='rounded-box sketchpad container-agenda'>
             <Canvas shapes={shapes} />
           </p>
         </div>
