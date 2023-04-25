@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import { useOthers } from '../liveblocks.config';
 import jwt_decode from 'jwt-decode';
 import logo from '../cnotes-logo.png';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './LoginButton';
 
 export default function Header({
   handleSignOut,
@@ -11,6 +13,41 @@ export default function Header({
   user,
   setUser,
 }) {
+  const Profile = () => {
+    const { user, isLoading, isAuthenticated } = useAuth0();
+
+    useEffect(() => console.log(user), [user]);
+
+    if (isLoading) {
+      console.log('loading');
+    } else if (!isAuthenticated) {
+      console.log('authenticated: ', isAuthenticated);
+    } else if (!isLoading && isAuthenticated) {
+      const { name, picture, email } = user;
+      return <div>{name}</div>;
+    }
+  };
+
+  function LogoutButton() {
+    const { isAuthenticated, logout } = useAuth0();
+
+    return (
+      // isAuthenticated && (
+      <button
+        onClick={() => {
+          logout({
+            // logoutParams: {
+            //   returnTo: window.location.origin,
+            // },
+          });
+        }}
+      >
+        Auth0 Log out
+      </button>
+      // )
+    );
+  }
+
   function handleSignOut(event) {
     // Resetting the user to default - change to {} when we go to prod
     setUser({});
@@ -46,6 +83,9 @@ export default function Header({
           </div>
           <div className='header-right'>
             <p className='header-right-child text-outside-boxes inside-margin'>
+              <LoginButton />
+              <LogoutButton />
+              <Profile />
               <p
                 className='header-right-child button-inter header-logout'
                 onClick={(e) => handleSignOut(e)}
