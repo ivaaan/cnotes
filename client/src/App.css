@@ -46,10 +46,18 @@ div {
   float: right;
   vertical-align: middle;
   margin-top: 10px;
+  /* display: flex; */
+  align-items: center;
+}
+
+.header-right-child {
+  /* vertical-align: middle; */
+  margin-top: 10px;
 }
 
 .header-logout {
   cursor: 'pointer';
+  position: relative;
 }
 
 .splashscreen {
@@ -164,10 +172,11 @@ p {
   margin-bottom: 5%;
 }
 
-/* .inside-margin {
-  margin-left: 5%;
-  margin-right: 5%;
-} */
+.inside-margin {
+  /* vertical-align: center; */
+  /* margin-left: 5%;
+  margin-right: 5%; */
+}
 
 .delete-button {
   position: absolute;

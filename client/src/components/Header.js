@@ -45,14 +45,13 @@ export default function Header({
             <h1 className='header text-outside-boxes'>CNotes</h1>
           </div>
           <div className='header-right'>
-            <p className='text-outside-boxes inside-margin'>
-              Logged in as: {user.firstname} {user.lastname}
-              <span
-                className='button-inter header-logout text-outside-boxes inside-margin'
+            <p className='header-right-child text-outside-boxes inside-margin'>
+              <p
+                className='header-right-child button-inter header-logout'
                 onClick={(e) => handleSignOut(e)}
               >
-                Sign out
-              </span>
+                Sign out of {user.firstname} {user.lastname}
+              </p>
             </p>
           </div>
         </>
