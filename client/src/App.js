@@ -11,36 +11,62 @@ import Loading from './components/Loading';
 import { RoomProvider } from './liveblocks.config';
 import { LiveList, LiveMap, LiveObject } from '@liveblocks/client';
 import './App.css';
+import { useAuth0 } from '@auth0/auth0-react';
+import LoginButton from './components/LoginButton';
+import LogoutButton from './components/LogoutButton';
 
 export default function App() {
+  const { user, isLoading, isAuthenticated } = useAuth0();
+  let authenticatedUserProfile;
   const [calendarEvents, setCalendarEvents] = useState([]);
   const [selectedRoomId, setSelectedRoomId] = useState('todo');
   const [selectedEventName, setSelectedEventName] = useState(null);
   const [selectedEventAttendees, setSelectedEventAttendees] = useState([]);
-  const [user, setUser] = useState({
-    email: 'diykarelia@gmail.com',
-    firstname: 'Ivan',
-    lastname: 'Zoloto',
+  const [currentUser, setCurrentUser] = useState({
+    email: 'test@gmail.com',
+    firstname: 'Test',
+    lastname: 'Test',
   });
-  const [signedIn, setSignedIn] = useState(false);
+
+  // function Wrapper({ children }) {
+  //   const { isLoading, error } = useAuth0();
+  //   if (isLoading) {
+  //     return <div>Loading...</div>;
+  //   }
+  //   if (error) {
+  //     return <div>Oops... {error.message}</div>;
+  //   }
+  //   return <>{children}</>;
+  // }
 
   useEffect(() => {
+    if (!isAuthenticated) {
+      console.log('Auth0 isAuthenticated:', isAuthenticated);
+    } else if (isAuthenticated) {
+      console.log('Auth0 user: ', user);
+      setCurrentUser({
+        email: user.email,
+        firstname: user.given_name,
+        lastname: user.family_name,
+      });
+      console.log('currentUser after the setter func', currentUser);
+    }
+
     getCalendarEvents()
       .then((response) => response.json())
       .then((actualData) => setCalendarEvents(actualData))
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [isAuthenticated]);
 
   return (
     <>
-      {!user.email ? (
-        // {!setSignedIn ? (
-        <LoginSplashscreen setUser={setUser} setSignedIn={setSignedIn} />
+      {/* <Wrapper> */}
+      {!isAuthenticated ? (
+        <LoginSplashscreen setCurrentUser={setCurrentUser} />
       ) : (
         <>
-          {/* <GoogleOAuthProvider clientId='448822010627-918u4m6fkd56s30l09soa3aq8up3lske.apps.googleusercontent.com'> */}
           <RoomProvider
             id={selectedRoomId}
             initialPresence={{}}
@@ -48,8 +74,6 @@ export default function App() {
               todos: new LiveList(),
               agendaItems: new LiveList(),
               shapes: new LiveMap(),
-              // layers: new LiveMap(),
-              // layerIds: new LiveList(),
             })}
           >
             <Suspense fallback={<Loading />}>
@@ -59,8 +83,8 @@ export default function App() {
                   selectedRoomId={selectedRoomId}
                   selectedEventName={selectedEventName}
                   selectedEventAttendees={selectedEventAttendees}
-                  user={user}
-                  setUser={setUser}
+                  user={currentUser}
+                  setCurrentUser={setCurrentUser}
                 />
               </div>
               <div className='container'>
@@ -78,16 +102,15 @@ export default function App() {
                   selectedRoomId={selectedRoomId}
                   selectedEventName={selectedEventName}
                   selectedEventAttendees={selectedEventAttendees}
-                  user={user}
+                  user={currentUser}
                 />
               </div>
-
               <SketchPad selectedRoomId={selectedRoomId} />
             </Suspense>
           </RoomProvider>
-          {/* </GoogleOAuthProvider> */}
         </>
       )}
+      {/* </Wrapper> */}
     </>
   );
 }

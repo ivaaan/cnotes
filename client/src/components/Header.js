@@ -1,60 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useOthers } from '../liveblocks.config';
-import jwt_decode from 'jwt-decode';
 import logo from '../cnotes-logo.png';
-import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
+import LogoutButton from './LogoutButton';
 
 export default function Header({
-  handleSignOut,
   selectedRoomId,
   selectedEventName,
   selectedEventAttendees,
   user,
   setUser,
 }) {
-  const Profile = () => {
-    const { user, isLoading, isAuthenticated } = useAuth0();
-
-    useEffect(() => console.log(user), [user]);
-
-    if (isLoading) {
-      console.log('loading');
-    } else if (!isAuthenticated) {
-      console.log('authenticated: ', isAuthenticated);
-    } else if (!isLoading && isAuthenticated) {
-      const { name, picture, email } = user;
-      return <div>{name}</div>;
-    }
-  };
-
-  function LogoutButton() {
-    const { isAuthenticated, logout } = useAuth0();
-
-    return (
-      // isAuthenticated && (
-      <button
-        onClick={() => {
-          logout({
-            // logoutParams: {
-            //   returnTo: window.location.origin,
-            // },
-          });
-        }}
-      >
-        Auth0 Log out
-      </button>
-      // )
-    );
-  }
-
-  function handleSignOut(event) {
-    // Resetting the user to default - change to {} when we go to prod
-    setUser({});
-    // Hiding the google HTML form
-    // document.getElementById('signInDiv').hidden = false;
-  }
-
   function WhoIsHere() {
     const userCount = useOthers((others) => others.length);
 
@@ -84,14 +40,13 @@ export default function Header({
           <div className='header-right'>
             <p className='header-right-child text-outside-boxes inside-margin'>
               <LoginButton />
-              <LogoutButton />
-              <Profile />
-              <p
+              <LogoutButton user={user} />
+              {/* <p
                 className='header-right-child button-inter header-logout'
-                onClick={(e) => handleSignOut(e)}
+                // onClick={(e) => handleSignOut(e)}
               >
                 Sign out of {user.firstname} {user.lastname}
-              </p>
+              </p> */}
             </p>
           </div>
         </>
@@ -137,28 +92,6 @@ export default function Header({
           </>
         )}
       </div>
-      {/* <p>
-        <GoogleLogin
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log('Login Failed');
-          }}
-        />
-        ;
-      </p>
-      <p>
-        <GoogleLogin
-          onSuccess={(credentialResponse) => {
-            console.log(credentialResponse);
-          }}
-          onError={() => {
-            console.log('Login Failed');
-          }}
-          useOneTap
-        />
-      </p> */}
     </>
   );
 }

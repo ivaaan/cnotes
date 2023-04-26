@@ -4,6 +4,13 @@ export default function LoginButton() {
   const { isAuthenticated, loginWithRedirect } = useAuth0();
 
   return (
-    !isAuthenticated && <button onClick={loginWithRedirect}>Log in</button>
+    !isAuthenticated && (
+      <p
+        className='text-outside-boxes header-right-child button-inter header-logout'
+        onClick={loginWithRedirect}
+      >
+        Log in with Google
+      </p>
+    )
   );
 }
