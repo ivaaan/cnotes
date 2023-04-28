@@ -1,6 +1,6 @@
 const getCalendarEvents = async () => {
   try {
-    const response = await fetch('http://localhost:4200/');
+    const response = await fetch('http://localhost:4201/');
     return response;
   } catch (e) {
     console.log(e);

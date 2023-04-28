@@ -1,6 +1,8 @@
+import React from "react"
+
 export default function Loading() {
   return (
-    <div className='loading'>
+    <div className='loading' data-testid= "loadingtest">
       <img
         src='https://raw.githubusercontent.com/n3r4zzurr0/svg-spinners/main/svg-css/wind-toy.svg'
         alt='Loading'

@@ -3,7 +3,7 @@ import { createRoomContext } from '@liveblocks/react';
 
 const client = createClient({
   publicApiKey:
-    'pk_dev_JMMIZJW_JvYGqfhcz5nQzLFQZjjGga3NpRheMFhXAU1fkky-rT3rRucTHWavILAW',
+    'pk_dev_e7AHYE_IXcKX20ZCwTwjuH3lx5DJCcw2HEj-a3amLmRWnsPjZJMvleYnhMR820Mi',
 });
 
 // type Storage = {

@@ -1,0 +1,130 @@
+// import React from "react"
+// import { clearCanvas, drawLine } from "../components/SketchPad"
+// import { render, fireEvent } from '@testing-library/react';
+// import SketchPad, { getRandomInt, getRandomColor } from '../components/SketchPad';
+// import { LiveList, LiveMap, LiveObject } from '@liveblocks/client';
+// import {
+//     useMap,
+//     useMyPresence,
+//     useUpdateMyPresence,
+//     useOthers,
+//     useHistory,
+//     useBatch,
+//     RoomProvider,
+//   } from '../liveblocks.config';
+
+// describe('SketchPad component', () => {
+//   test('renders loading message while shapes are loading', () => {
+//     const {getByText } = render(<RoomProvider 
+//         id={'todo'}
+//         initialPresence={{}}
+//         initialStorage={() => ({
+//             todos: new LiveList(),
+//             agendaItems: new LiveList(),
+//             shapes: null,
+//         })}
+//     >
+//         <SketchPad selectedRoomId="test" />
+//     </RoomProvider>);
+//     expect(getByText('Loading')).toBeInTheDocument();
+//   });
+
+//  test('renders canvas and toolbar when shapes have loaded', () => {
+//     const shapes = new Map();
+//     const { getByText, getByPlaceholderText } = render(
+//         <RoomProvider 
+//         id={'todo'}
+//         initialPresence={{}}
+//         initialStorage={() => ({
+//             todos: new LiveList(),
+//             agendaItems: new LiveList(),
+//             shapes: new LiveMap(),
+//         })}
+//     >
+//         <SketchPad selectedRoomId="test" shapes={shapes} />
+//     </RoomProvider>
+//     );
+
+//     expect(getByText('Sticky Notes')).toBeInTheDocument();
+//     expect(getByPlaceholderText('Type text here')).toBeInTheDocument();
+//     expect(getByText('Stick it!')).toBeInTheDocument();
+//     expect(getByText('Delete')).toBeInTheDocument();
+//     expect(getByText('Undo')).toBeInTheDocument();
+//     expect(getByText('Redo')).toBeInTheDocument();
+//   });
+
+//   test('inserts a new rectangle on "Stick it!" click', () => {
+//     const shapes = new Map();
+//     const { getByText, getByPlaceholderText, getByTestId } = render(
+//         <RoomProvider 
+//             id={'todo'}
+//             initialPresence={{}}
+//             initialStorage={() => ({
+//                 todos: new LiveList(),
+//                 agendaItems: new LiveList(),
+//                 shapes: new LiveMap(),
+//             })}
+//         >
+//             <SketchPad selectedRoomId="test" shapes={shapes} />
+//         </RoomProvider>
+//     );
+
+//     const input = getByPlaceholderText('Type text here');
+//     const addButton = getByText('Stick it!');
+
+//     fireEvent.change(input, { target: { value: 'Test rectangle' } });
+//     fireEvent.click(addButton);
+
+//     expect(shapes.size).toBe(1);
+
+//     const rectangle = shapes.values().next().value;
+//     expect(rectangle.text).toBe('Test rectangle');
+//     expect(getByTestId('rectangle')).toBeInTheDocument();
+//   });
+
+//   test('selects a rectangle on pointer down', () => {
+//     const shapes = new Map([['1', { x: 0, y: 0, fill: '#CCC', text: 'Test rectangle' }]]);
+//     const { getByTestId } = render(<RoomProvider 
+//         id={'todo'}
+//         initialPresence={{}}
+//         initialStorage={() => ({
+//             todos: new LiveList(),
+//             agendaItems: new LiveList(),
+//             shapes: new LiveMap(),
+//         })}
+//     >
+//         <SketchPad selectedRoomId="test" shapes={shapes} />
+//     </RoomProvider>);
+
+//     const rectangle = getByTestId('rectangle');
+//     fireEvent.pointerDown(rectangle);
+
+//     expect(shapes.get('1')).toMatchObject({ x: 0, y: 0, fill: '#CCC', text: 'Test rectangle' });
+//   });
+
+//   test('deletes a selected rectangle on "Delete" click', () => {
+//     const shapes = new Map([['1', { x: 0, y: 0, fill: '#CCC', text: 'Test rectangle' }]]);
+//     const { getByText, getByTestId, queryByTestId } = render(
+//         <RoomProvider 
+//         id={'todo'}
+//         initialPresence={{}}
+//         initialStorage={() => ({
+//             todos: new LiveList(),
+//             agendaItems: new LiveList(),
+//             shapes: new LiveMap(),
+//         })}
+//     >
+//         <SketchPad selectedRoomId="test" shapes={shapes} />
+//     </RoomProvider>
+//     );
+
+//     const rectangle = getByTestId('rectangle');
+//     fireEvent.pointerDown(rectangle);
+
+//     const deleteButton = getByText('Delete');
+//     fireEvent.click(deleteButton);
+
+//     expect(shapes.size).toBe(0);
+//     expect(queryByTestId('rectangle')).not.toBeInTheDocument();
+//   });
+// });
