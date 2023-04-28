@@ -10,8 +10,8 @@ const get = async (req, res) => {
   }
 };
 
-const post = (req, res) => {
-  res.status(201);
-};
+// const post = (req, res) => {
+//   res.status(201);
+// };
 
-module.exports = { get, post };
+module.exports = { get };

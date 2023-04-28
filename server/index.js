@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 4200;
+const port = 4201;
 const cors = require('cors');
 
 const router = require('./router.js');
@@ -18,3 +18,9 @@ app.use(router);
     console.log('Error in connecting to database :', e);
   }
 })();
+
+    // app.listen(port, () => {
+    //   console.log(`🌽 Listening on http://localhost:${port}`);
+    // });
+
+    module.exports = app;

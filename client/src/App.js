@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Suspense } from 'react';
 import LoginSplashscreen from './components/LoginSplashscreen';
 import Header from './components/Header';
@@ -61,7 +61,7 @@ export default function App() {
   }, [isAuthenticated]);
 
   return (
-    <>
+    <div data-testid="app-component">
       {/* <Wrapper> */}
       {!isAuthenticated ? (
         <LoginSplashscreen setCurrentUser={setCurrentUser} />
@@ -111,6 +111,6 @@ export default function App() {
         </>
       )}
       {/* </Wrapper> */}
-    </>
+    </div>
   );
 }

@@ -1,7 +1,7 @@
 # Google API credentials #
 ######################
 credentials.json
-
+token.json
 # Logs and databases #
 ######################
 *.log
@@ -17,3 +17,4 @@ credentials.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+node_modules
