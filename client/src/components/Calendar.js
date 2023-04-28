@@ -13,7 +13,7 @@ export default function Calendar({
   };
 
   return (
-    <>
+    < div data-testid="calendar-component">
       {calendarEvents.length > 0 ? (
         <div className='cal-container'>
           {calendarEvents.map((event, index) => (
@@ -61,6 +61,6 @@ export default function Calendar({
           <h1>⏳ Loading calendar events...</h1>
         </p>
       )}
-    </>
+    </div>
   );
 }

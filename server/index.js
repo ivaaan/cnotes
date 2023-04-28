@@ -18,3 +18,9 @@ app.use(router);
     console.log('Error in connecting to database :', e);
   }
 })();
+
+    // app.listen(port, () => {
+    //   console.log(`🌽 Listening on http://localhost:${port}`);
+    // });
+
+    module.exports = app;

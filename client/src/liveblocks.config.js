@@ -4,8 +4,8 @@ import { createRoomContext } from '@liveblocks/react';
 const client = createClient({
   publicApiKey:
     'pk_dev_e7AHYE_IXcKX20ZCwTwjuH3lx5DJCcw2HEj-a3amLmRWnsPjZJMvleYnhMR820Mi',
+  // publicApiKey: "pk_dev_uZqdsoIQA_2keqWocagbZuhwa8tJo0rbPle2uFJgcDABnl3MB9w4jhP7jejOT3xA",
 });
-
 // type Storage = {
 //   // animals: LiveList<string>,
 //   // ...

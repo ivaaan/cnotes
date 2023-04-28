@@ -1,3 +1,4 @@
+import React from 'react';
 import { useState } from 'react';
 
 import {
@@ -45,7 +46,7 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
   }, []);
 
   return (
-    <>
+    <div data-testid="agenda-component">
       {selectedRoomId !== 'todo' && (
         <>
           <div className='agenda-test'>
@@ -123,6 +124,6 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
           </div>
         </>
       )}
-    </>
+    </div>
   );
 }
