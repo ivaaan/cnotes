@@ -33,7 +33,7 @@ describe('Server API', () => {
 //   test('POST / should return 201 status', async () => {
 //     const response = await request(app).post('/');
 //     expect(response.status).toBe(201);
-//   }, 10000); // Set the timeout to 10000 ms (10 seconds)
+//   }, 10000); // Set timeout
   
 });
 
