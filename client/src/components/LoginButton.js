@@ -10,7 +10,7 @@ export default function LoginButton() {
         className='text-outside-boxes header-right-child button-inter header-logout'
         onClick={loginWithRedirect} data-testid= "loginbuttontest"
       >
-        Log in with Google
+      Log in with Google
       </p>
     )
   );

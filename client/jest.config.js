@@ -7,10 +7,9 @@ module.exports = {
       '^.+\\.(js|jsx|ts|tsx)$': 'babel-jest',
     },
     setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
+    moduleNameMapper: {
+        '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/src/__mocks__/fileMock.js',
+        '\\.(css|scss)$': 'identity-obj-proxy',
+      },
   };
-  //   moduleNameMapper: {
-  //       '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/src/__mocks__/fileMock.js',
-  //       '\\.(css|scss)$': 'identity-obj-proxy',
-  //     },
-  // };
   

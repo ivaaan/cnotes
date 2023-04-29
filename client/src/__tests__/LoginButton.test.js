@@ -4,11 +4,12 @@ import '@testing-library/jest-dom';
 import LoginButton from "../components/LoginButton"
 import {useAuth0} from "@auth0/auth0-react"
 
-jest.mock("@auth0/auth0-react")
+jest.mock("@auth0/auth0-react", () => ({
+  useAuth0: jest.fn(),
+}));
 
 describe('Login Button Tests', () => {
 
-  it("S")
 
   it('should render the login button correctly', () => {
     // Mock the isAuthenticated value to be false
