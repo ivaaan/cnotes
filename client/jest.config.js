@@ -8,8 +8,10 @@ module.exports = {
     },
     setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
     moduleNameMapper: {
+        moduleNameMapper: {
         '\\.(jpg|jpeg|png|gif|webp|svg)$': '<rootDir>/src/__mocks__/fileMock.js',
         '\\.(css|scss)$': 'identity-obj-proxy',
       },
+    }
   };
   
