@@ -8,7 +8,6 @@ jest.mock("@auth0/auth0-react")
 
 describe('Login Button Tests', () => {
 
-  it("S")
 
   it('should render the login button correctly', () => {
     // Mock the isAuthenticated value to be false
