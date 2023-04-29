@@ -1,7 +1,7 @@
 # Google API credentials #
 ######################
 credentials.json
-token.json
+server/token.json
 # Logs and databases #
 ######################
 *.log
