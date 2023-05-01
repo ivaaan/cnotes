@@ -4,13 +4,27 @@ import logo from '../cnotes-logo.png';
 import LoginButton from './LoginButton';
 import LogoutButton from './LogoutButton';
 
-export default function Header({
+interface HeaderProps {
+  selectedRoomId: string;
+  selectedEventName: string | null;
+  selectedEventAttendees: Array<{ email: string }> | null;
+  user: {
+    firstname?: string;
+    lastname?: string;
+    email?: string;
+  } | null;
+  calendarEvents: any[]; // Update this with the appropriate type for calendar events
+  setCurrentUser: (user: any) => void; // Update 'any' with the appropriate type for the user object
+}
+
+const Header: React.FC<HeaderProps> = ({
   selectedRoomId,
   selectedEventName,
   selectedEventAttendees,
   user,
-  setUser,
-}) {
+  calendarEvents,
+  setCurrentUser  
+}) => {
   function WhoIsHere() {
     const userCount = useOthers((others) => others.length);
 
@@ -71,7 +85,7 @@ export default function Header({
                   {
                     return (
                       <>
-                        {attendee.email === user.email ? (
+                        {attendee.email === user?.email ? (
                           <></>
                         ) : (
                           <li>{attendee.email}</li>
@@ -95,3 +109,5 @@ export default function Header({
     </>
   );
 }
+
+export default Header;

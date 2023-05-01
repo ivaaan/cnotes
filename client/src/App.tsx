@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ReactNode } from 'react';
 import { Suspense } from 'react';
 import LoginSplashscreen from './components/LoginSplashscreen';
 import Header from './components/Header';
@@ -14,15 +14,18 @@ import './App.css';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './components/LoginButton';
 import LogoutButton from './components/LogoutButton';
+import { User } from './interfaces';
+
+
 
 export default function App() {
   const { user, isLoading, isAuthenticated } = useAuth0();
-  let authenticatedUserProfile;
-  const [calendarEvents, setCalendarEvents] = useState([]);
-  const [selectedRoomId, setSelectedRoomId] = useState('todo');
-  const [selectedEventName, setSelectedEventName] = useState(null);
-  const [selectedEventAttendees, setSelectedEventAttendees] = useState([]);
-  const [currentUser, setCurrentUser] = useState({
+  let authenticatedUserProfile: User | undefined;
+  const [calendarEvents, setCalendarEvents] = useState<any[]>([]); // You can replace any with a more specific type for your calendar events
+  const [selectedRoomId, setSelectedRoomId] = useState<string>('todo');
+  const [selectedEventName, setSelectedEventName] = useState<string | null>(null);
+  const [selectedEventAttendees, setSelectedEventAttendees] = useState<any[]>([]); // You can replace any with a more specific type for your attendees
+  const [currentUser, setCurrentUser] = useState<User>({
     email: 'test@gmail.com',
     firstname: 'Test',
     lastname: 'Test',
@@ -45,15 +48,16 @@ export default function App() {
     } else if (isAuthenticated) {
       console.log('Auth0 user: ', user);
       setCurrentUser({
-        email: user.email,
-        firstname: user.given_name,
-        lastname: user.family_name,
+        email: user?.email,
+        firstname: user?.given_name,
+        lastname: user?.family_name,
       });
       console.log('currentUser after the setter func', currentUser);
     }
 
     getCalendarEvents()
-      .then((response) => response.json())
+    .then((response) => response && response.json())
+
       .then((actualData) => setCalendarEvents(actualData))
       .catch((err) => {
         console.log(err.message);
@@ -65,6 +69,7 @@ export default function App() {
       {/* <Wrapper> */}
       {!isAuthenticated ? (
         <LoginSplashscreen setCurrentUser={setCurrentUser} />
+
       ) : (
         <>
           <RoomProvider
@@ -105,7 +110,8 @@ export default function App() {
                   user={currentUser}
                 />
               </div>
-              <SketchPad selectedRoomId={selectedRoomId} />
+              <SketchPad selectedRoomId={selectedRoomId} selectedEventName={selectedEventName} />
+
             </Suspense>
           </RoomProvider>
         </>

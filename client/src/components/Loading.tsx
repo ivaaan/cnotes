@@ -1,6 +1,6 @@
 import React from "react"
 
-export default function Loading() {
+const Loading: React.FC = () => {
   return (
     <div className='loading' data-testid= "loadingtest">
       <img
@@ -14,3 +14,5 @@ export default function Loading() {
     </div>
   );
 }
+
+export default Loading;

@@ -5,7 +5,7 @@ import { Auth0Provider } from '@auth0/auth0-react';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <Auth0Provider
     domain='dev-su1yd85m3rmi1qr3.us.auth0.com'

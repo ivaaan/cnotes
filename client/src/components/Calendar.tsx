@@ -1,14 +1,15 @@
 import { format } from 'date-fns';
 import { useState } from 'react';
+import { CalendarProps } from '../interfaces';
 
-export default function Calendar({
+const Calendar: React.FC<CalendarProps> = ({
   calendarEvents,
   setSelectedRoomId,
   setSelectedEventName,
   setSelectedEventAttendees,
-}) {
-  const [isActive, setActive] = useState(false);
-  const toggleClass = (i) => {
+}) => {
+  const [isActive, setActive] = useState<number | null>(null);
+  const toggleClass = (i: number) => {
     setActive(i);
   };
 
@@ -64,3 +65,4 @@ export default function Calendar({
     </div>
   );
 }
+export default Calendar;

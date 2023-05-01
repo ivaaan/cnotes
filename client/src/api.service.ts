@@ -1,4 +1,4 @@
-const getCalendarEvents = async () => {
+export const getCalendarEvents = async () => {
   try {
     const response = await fetch('http://localhost:4201/');
     return response;
@@ -7,4 +7,4 @@ const getCalendarEvents = async () => {
   }
 };
 
-module.exports = { getCalendarEvents };
+// module.exports = { getCalendarEvents };

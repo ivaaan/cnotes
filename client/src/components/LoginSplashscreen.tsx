@@ -3,7 +3,11 @@ import logo from '../cnotes-logo-splashscreen.png';
 import { useAuth0 } from '@auth0/auth0-react';
 import LoginButton from './LoginButton';
 
-export default function LoginSplashscreen({ setCurrentUser, setSignedIn }) {
+interface LoginSplashscreenProps {
+  setCurrentUser: (user: any) => void;
+}
+
+const LoginSplashscreen: React.FC<LoginSplashscreenProps> = ({ setCurrentUser }) => {
 
   return (
     <>
@@ -19,3 +23,5 @@ export default function LoginSplashscreen({ setCurrentUser, setSignedIn }) {
     </>
   );
 }
+
+export default LoginSplashscreen;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-
+import { AgendaProps, AgendaItem } from '../interfaces';
 import {
   useMutation,
   useOthers,
@@ -10,7 +10,7 @@ import {
 
 import { LiveList, LiveObject } from '@liveblocks/client';
 
-export default function Agenda({ selectedRoomId, selectedEventName }) {
+ const Agenda: React.FC<AgendaProps> = ({ selectedRoomId, selectedEventName }) => {
   function SomeoneIsTyping() {
     const someoneIsTyping = useOthers((others) =>
       others.some((other) => other.presence.isTyping)
@@ -25,26 +25,34 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
 
   const [draftAgenda, setDraftAgenda] = useState('');
   const updateMyPresence = useUpdateMyPresence();
-  const agendaItems = useStorage((root) => root.agendaItems);
-
-  const addAgendaItem = useMutation(({ storage }, text) => {
-    storage.get('agendaItems')?.push(new LiveObject({ text }));
-    // console.log("storage.get('agendaItems')", storage.get('agendaItems'));
+  const agendaItems = useStorage((root) => root.agendaItems) as
+  | LiveList<{ text: string; checked: boolean }>
+  | undefined;
+  
+  const addAgendaItem = useMutation(({ storage }, text: string) => {
+    (storage.get("agendaItems") as LiveList<AgendaItem>).push({ text, checked: false });
+            // console.log("storage.get('agendaItems')", storage.get('agendaItems'));
     // console.log('agendaItems', agendaItems);
     // const storageFallback = storage.get('agendaItems') || [];
     // storage.set('agendaItems', [...storageFallback, new LiveObject({ text })]);
     // storage.set('agendaItems', [...storageFallback, { text }]);
   }, []);
-
-  const toggleAgendaItem = useMutation(({ storage }, index) => {
-    const agenda = storage.get('agendaItems').get(index);
-    agenda?.set('checked', !agenda.get('checked'));
+  
+  const toggleAgendaItem = useMutation(({ storage }, index: number) => {
+    const agenda = (storage.get("agendaItems") as LiveList<AgendaItem>).get(index);
+    if (agenda) {
+      (storage.get("agendaItems") as LiveList<AgendaItem>).set(index, {
+        ...agenda,
+        checked: !agenda.checked,
+      });
+    }
   }, []);
-
-  const deleteAgendaItem = useMutation(({ storage }, index) => {
-    storage.get('agendaItems').delete(index);
+  
+  
+  const deleteAgendaItem = useMutation(({ storage }, index: number) => {
+    (storage.get("agendaItems") as LiveList<AgendaItem>).delete(index);
   }, []);
-
+  
   return (
     <div data-testid="agenda-component">
       {selectedRoomId !== 'todo' && (
@@ -127,3 +135,5 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
     </div>
   );
 }
+
+export default Agenda;
