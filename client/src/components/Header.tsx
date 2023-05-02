@@ -1,8 +1,8 @@
-import { useState, useEffect } from 'react';
-import { useOthers } from '../liveblocks.config';
-import logo from '../cnotes-logo.png';
-import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
+import { useState, useEffect } from "react";
+import { useOthers } from "../liveblocks.config";
+import logo from "../cnotes-logo.png";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
 
 interface HeaderProps {
   selectedRoomId: string;
@@ -13,8 +13,8 @@ interface HeaderProps {
     lastname?: string;
     email?: string;
   } | null;
-  calendarEvents: any[]; // Update this with the appropriate type for calendar events
-  setCurrentUser: (user: any) => void; // Update 'any' with the appropriate type for the user object
+  calendarEvents: any[];
+  setCurrentUser: (user: any) => void;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = ({
   selectedEventAttendees,
   user,
   calendarEvents,
-  setCurrentUser  
+  setCurrentUser,
 }) => {
   function WhoIsHere() {
     const userCount = useOthers((others) => others.length);
@@ -31,11 +31,11 @@ const Header: React.FC<HeaderProps> = ({
     return (
       <>
         {userCount > 0 ? (
-          <div className='who_is_here'>
+          <div className="who_is_here">
             👯 There are {userCount} other users online
           </div>
         ) : (
-          <div className='who_is_here'>
+          <div className="who_is_here">
             🙆🏻‍♀️ You are the only user editing these notes right now!
           </div>
         )}
@@ -48,11 +48,11 @@ const Header: React.FC<HeaderProps> = ({
       {user && (
         <>
           <div>
-            <img className='logo-header' src={logo} />
-            <h1 className='header text-outside-boxes'>CNotes</h1>
+            <img className="logo-header" src={logo} />
+            <h1 className="header text-outside-boxes">CNotes</h1>
           </div>
-          <div className='header-right'>
-            <p className='header-right-child text-outside-boxes inside-margin'>
+          <div className="header-right">
+            <p className="header-right-child text-outside-boxes inside-margin">
               <LoginButton />
               <LogoutButton user={user} />
               {/* <p
@@ -66,20 +66,20 @@ const Header: React.FC<HeaderProps> = ({
         </>
       )}
       <div>
-        <h1 className='druk text-outside-boxes inside-margin'>
+        <h1 className="druk text-outside-boxes inside-margin">
           {selectedEventName
-            ? 'Team notes for:'
-            : '👇🏻 Select a calendar event:'}
+            ? "Team notes for:"
+            : "👇🏻 Select a calendar event:"}
         </h1>
-        <h1 className='text-outside-boxes inside-margin'>
-          {selectedEventName ? selectedEventName : ''}
+        <h1 className="text-outside-boxes inside-margin">
+          {selectedEventName ? selectedEventName : ""}
         </h1>
       </div>
       <div>
-        {selectedRoomId !== 'todo' && (
+        {selectedRoomId !== "todo" && (
           <>
             {selectedEventAttendees ? (
-              <p className='text-outside-boxes inside-margin'>
+              <p className="text-outside-boxes inside-margin">
                 Team members in this calendar event:
                 {selectedEventAttendees.map((attendee) => {
                   {
@@ -96,11 +96,11 @@ const Header: React.FC<HeaderProps> = ({
                 })}
               </p>
             ) : (
-              <p className='text-outside-boxes inside-margin'>
+              <p className="text-outside-boxes inside-margin">
                 This calendar event does not have any attendees yet.
               </p>
             )}
-            <p className='text-outside-boxes inside-margin'>
+            <p className="text-outside-boxes inside-margin">
               <WhoIsHere />
             </p>
           </>
@@ -108,6 +108,6 @@ const Header: React.FC<HeaderProps> = ({
       </div>
     </>
   );
-}
+};
 
 export default Header;

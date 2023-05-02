@@ -1,6 +1,6 @@
-import { format } from 'date-fns';
-import { useState } from 'react';
-import { CalendarProps } from '../interfaces';
+import { format } from "date-fns";
+import { useState } from "react";
+import { CalendarProps } from "../interfaces";
 
 const Calendar: React.FC<CalendarProps> = ({
   calendarEvents,
@@ -14,43 +14,43 @@ const Calendar: React.FC<CalendarProps> = ({
   };
 
   return (
-    < div data-testid="calendar-component">
+    <div data-testid="calendar-component">
       {calendarEvents.length > 0 ? (
-        <div className='cal-container'>
+        <div className="cal-container">
           {calendarEvents.map((event, index) => (
             <div
               // className='inside-margin button-inter cal cal-single-event'
               className={
                 isActive === index
-                  ? 'event-was-selected inside-margin button-inter cal cal-single-event'
-                  : 'inside-margin button-inter cal cal-single-event'
+                  ? "event-was-selected inside-margin button-inter cal cal-single-event"
+                  : "inside-margin button-inter cal cal-single-event"
               }
               key={event.id}
               onClick={(e) => {
                 setSelectedRoomId(event.id);
                 setSelectedEventName(event.summary);
                 // console.log('event in Calendar', event);
-                console.log('event.attendees in Calendar', event.attendees);
+                console.log("event.attendees in Calendar", event.attendees);
                 setSelectedEventAttendees(event.attendees);
                 // e.currentTarget.classList.toggle('event-was-selected');
                 toggleClass(index);
               }}
             >
-              <div className='inside-margin'>
+              <div className="inside-margin">
                 <p>{event.summary}</p>
                 {/* Checking if the event is multi-day or date-time format */}
                 {event.start.date ? (
-                  <p className='text-regular'>
-                    {format(new Date(event.start.date), 'MMMM do')} to{' '}
-                    {format(new Date(event.end.date), 'MMMM do, yyyy')}
+                  <p className="text-regular">
+                    {format(new Date(event.start.date), "MMMM do")} to{" "}
+                    {format(new Date(event.end.date), "MMMM do, yyyy")}
                   </p>
                 ) : (
-                  <p className='text-regular'>
+                  <p className="text-regular">
                     {format(
                       new Date(event.start.dateTime),
-                      'MMMM do, yyyy - hh:mm aaaa'
-                    )}{' '}
-                    to {format(new Date(event.end.dateTime), 'hh:mm aaaa')}
+                      "MMMM do, yyyy - hh:mm aaaa"
+                    )}{" "}
+                    to {format(new Date(event.end.dateTime), "hh:mm aaaa")}
                   </p>
                 )}
               </div>
@@ -64,5 +64,5 @@ const Calendar: React.FC<CalendarProps> = ({
       )}
     </div>
   );
-}
+};
 export default Calendar;

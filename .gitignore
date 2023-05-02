@@ -2,6 +2,8 @@
 ######################
 credentials.json
 server/token.json
+token.json
+.env
 # Logs and databases #
 ######################
 *.log
@@ -17,4 +19,20 @@ server/token.json
 .Trashes
 ehthumbs.db
 Thumbs.db
+# Dependency directories
 node_modules
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Custom
+private
+build
+dist
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local

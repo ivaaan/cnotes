@@ -1,34 +1,36 @@
-import React, { useState, useEffect, ReactNode } from 'react';
-import { Suspense } from 'react';
-import LoginSplashscreen from './components/LoginSplashscreen';
-import Header from './components/Header';
-import Calendar from './components/Calendar';
-import { getCalendarEvents } from './api.service';
-import Agenda from './components/Agenda';
-import TodoList from './components/TodoList';
-import SketchPad from './components/SketchPad';
-import Loading from './components/Loading';
-import { RoomProvider } from './liveblocks.config';
-import { LiveList, LiveMap, LiveObject } from '@liveblocks/client';
-import './App.css';
-import { useAuth0 } from '@auth0/auth0-react';
-import LoginButton from './components/LoginButton';
-import LogoutButton from './components/LogoutButton';
-import { User } from './interfaces';
-
-
+import React, { useState, useEffect, ReactNode } from "react";
+import { Suspense } from "react";
+import LoginSplashscreen from "./components/LoginSplashscreen";
+import Header from "./components/Header";
+import Calendar from "./components/Calendar";
+import { getCalendarEvents } from "./api.service";
+import Agenda from "./components/Agenda";
+import TodoList from "./components/TodoList";
+import SketchPad from "./components/SketchPad";
+import Loading from "./components/Loading";
+import { RoomProvider } from "./liveblocks.config";
+import { LiveList, LiveMap, LiveObject } from "@liveblocks/client";
+import "./App.css";
+import { useAuth0 } from "@auth0/auth0-react";
+import LoginButton from "./components/LoginButton";
+import LogoutButton from "./components/LogoutButton";
+import { User } from "./interfaces";
 
 export default function App() {
   const { user, isLoading, isAuthenticated } = useAuth0();
   let authenticatedUserProfile: User | undefined;
-  const [calendarEvents, setCalendarEvents] = useState<any[]>([]); // You can replace any with a more specific type for your calendar events
-  const [selectedRoomId, setSelectedRoomId] = useState<string>('todo');
-  const [selectedEventName, setSelectedEventName] = useState<string | null>(null);
-  const [selectedEventAttendees, setSelectedEventAttendees] = useState<any[]>([]); // You can replace any with a more specific type for your attendees
+  const [calendarEvents, setCalendarEvents] = useState<any[]>([]);
+  const [selectedRoomId, setSelectedRoomId] = useState<string>("todo");
+  const [selectedEventName, setSelectedEventName] = useState<string | null>(
+    null
+  );
+  const [selectedEventAttendees, setSelectedEventAttendees] = useState<any[]>(
+    []
+  ); // You can replace any with a more specific type for your attendees
   const [currentUser, setCurrentUser] = useState<User>({
-    email: 'test@gmail.com',
-    firstname: 'Test',
-    lastname: 'Test',
+    email: "test@gmail.com",
+    firstname: "Test",
+    lastname: "Test",
   });
 
   // function Wrapper({ children }) {
@@ -44,19 +46,19 @@ export default function App() {
 
   useEffect(() => {
     if (!isAuthenticated) {
-      console.log('Auth0 isAuthenticated:', isAuthenticated);
+      console.log("Auth0 isAuthenticated:", isAuthenticated);
     } else if (isAuthenticated) {
-      console.log('Auth0 user: ', user);
+      console.log("Auth0 user: ", user);
       setCurrentUser({
         email: user?.email,
         firstname: user?.given_name,
         lastname: user?.family_name,
       });
-      console.log('currentUser after the setter func', currentUser);
+      console.log("currentUser after the setter func", currentUser);
     }
 
     getCalendarEvents()
-    .then((response) => response && response.json())
+      .then((response) => response && response.json())
 
       .then((actualData) => setCalendarEvents(actualData))
       .catch((err) => {
@@ -69,7 +71,6 @@ export default function App() {
       {/* <Wrapper> */}
       {!isAuthenticated ? (
         <LoginSplashscreen setCurrentUser={setCurrentUser} />
-
       ) : (
         <>
           <RoomProvider
@@ -82,7 +83,7 @@ export default function App() {
             })}
           >
             <Suspense fallback={<Loading />}>
-              <div className='header-container'>
+              <div className="header-container">
                 <Header
                   calendarEvents={calendarEvents}
                   selectedRoomId={selectedRoomId}
@@ -92,7 +93,7 @@ export default function App() {
                   setCurrentUser={setCurrentUser}
                 />
               </div>
-              <div className='container'>
+              <div className="container">
                 <Calendar
                   calendarEvents={calendarEvents}
                   setSelectedRoomId={setSelectedRoomId}
@@ -110,8 +111,10 @@ export default function App() {
                   user={currentUser}
                 />
               </div>
-              <SketchPad selectedRoomId={selectedRoomId} selectedEventName={selectedEventName} />
-
+              <SketchPad
+                selectedRoomId={selectedRoomId}
+                selectedEventName={selectedEventName}
+              />
             </Suspense>
           </RoomProvider>
         </>
