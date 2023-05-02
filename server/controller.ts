@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
-import * as google from './google';
+import { getData } from './google';
+
 
 export const get = async (req: Request, res: Response): Promise<void> => {
   try {
-    const data = await google.getData();
+    const data = await getData();
     res.status(200).json(data);
     // return data;
   } catch (e) {
