@@ -1,13 +1,5 @@
-import express, { Request, Response } from 'express';
-import cors from 'cors';
-import router from './router';
-const app = express();
-const port = 4209;
-
-
-app.use(cors());
-app.use(express.json());
-app.use(router);
+import app from "./server";
+import {port} from "./server";
 
 (async () => {
   try {
@@ -18,5 +10,3 @@ app.use(router);
     console.log('Error in connecting to database :', e);
   }
 })();
-
-export default app;

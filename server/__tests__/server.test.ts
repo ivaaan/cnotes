@@ -1,23 +1,23 @@
 import request from 'supertest';
-import app from './index';
-import { getData } from './google';
-
+import app from '../server';
+import { getData } from '../google';
+console.log('TS TEST');
 const port = 4202;
 let server: any;
 
-jest.mock('./google', () => ({
+jest.mock('../google', () => ({
     getData: jest.fn(() => Promise.resolve(expectedResponse)),
   }));
   
 
-beforeEach((done) => {
+beforeAll((done) => {
   server = app.listen(port, () => {
     console.log(`🌽 Listening on http://localhost:${port}`);
     done();
   });
 });
 
-afterEach((done) => {
+afterAll((done) => {
   server.close(() => {
     console.log('Server closed');
     done();
