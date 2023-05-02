@@ -1,5 +1,5 @@
-import { useAuth0 } from '@auth0/auth0-react';
-import React from 'react';
+import { useAuth0 } from "@auth0/auth0-react";
+import React from "react";
 
 interface LogoutButtonProps {
   user: {
@@ -16,10 +16,10 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ user }) => {
     <>
       {isAuthenticated && (
         <p
-          className='header-right-child button-inter header-logout'
+          className="header-right-child button-inter header-logout"
           onClick={() => {
             logout();
-            console.log('Auth0 logged out!');
+            console.log("Auth0 logged out!");
           }}
         >
           Sign out of {user?.firstname} {user?.lastname}
