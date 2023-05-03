@@ -563,12 +563,7 @@ p {
   width: 100vh;
   display: flex;
   justify-content: center;
-<<<<<<< HEAD
-  margin: 0;
-  padding: 0;
-=======
   
->>>>>>> origin/development
 }
 
 .drawing-pad-wrapper {

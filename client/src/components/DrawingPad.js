@@ -52,6 +52,7 @@ export default function DrawingPad({ selectedRoomId, selectedEventName }) {
           <div className="drawing-pad-container">
             <div className="drawing-pad-wrapper">
               <svg
+                id="svgDrawing"
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
                 onPointerUp={handlePointerUp}
