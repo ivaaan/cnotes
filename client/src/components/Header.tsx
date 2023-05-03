@@ -3,6 +3,7 @@ import { useOthers } from "../liveblocks.config";
 import logo from "../cnotes-logo.png";
 import LoginButton from "./LoginButton";
 import LogoutButton from "./LogoutButton";
+import React from "react";
 // eslint-disable-next-line no-undef
 interface HeaderProps {
   selectedRoomId: string;
