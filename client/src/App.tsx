@@ -15,6 +15,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import LoginButton from "./components/LoginButton";
 import LogoutButton from "./components/LogoutButton";
 import { User } from "./interfaces";
+import DrawingPad from "./components/DrawingPad";
 
 export default function App() {
   const { user, isLoading, isAuthenticated } = useAuth0();
@@ -115,6 +116,12 @@ export default function App() {
                 selectedRoomId={selectedRoomId}
                 selectedEventName={selectedEventName}
               />
+              <div className="drawing-pad-wrapper">
+                <DrawingPad
+                  selectedRoomId={selectedRoomId}
+                  selectedEventName={selectedEventName}
+                />
+              </div>
             </Suspense>
           </RoomProvider>
         </>

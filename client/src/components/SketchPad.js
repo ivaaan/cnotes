@@ -183,7 +183,6 @@ export default function SketchPad({ selectedRoomId, selectedEventName }) {
           <p className="rounded-box sketchpad container-agenda">
             <Canvas shapes={shapes} />
           </p>
-
         </div>
       )}
     </>
