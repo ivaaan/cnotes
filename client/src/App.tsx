@@ -94,29 +94,29 @@ export default function App() {
                   setCurrentUser={setCurrentUser}
                 />
               </div>
-              <div className="container">
-                <Calendar
-                  calendarEvents={calendarEvents}
-                  setSelectedRoomId={setSelectedRoomId}
-                  setSelectedEventName={setSelectedEventName}
-                  setSelectedEventAttendees={setSelectedEventAttendees}
-                />
-                <Agenda
+              <div className="main-container">
+                <div className="container">
+                  <Calendar
+                    calendarEvents={calendarEvents}
+                    setSelectedRoomId={setSelectedRoomId}
+                    setSelectedEventName={setSelectedEventName}
+                    setSelectedEventAttendees={setSelectedEventAttendees}
+                  />
+                  <Agenda
+                    selectedRoomId={selectedRoomId}
+                    selectedEventName={selectedEventName}
+                  />
+                  <TodoList
+                    selectedRoomId={selectedRoomId}
+                    selectedEventName={selectedEventName}
+                    selectedEventAttendees={selectedEventAttendees}
+                    user={currentUser}
+                  />
+                </div>
+                <SketchPad
                   selectedRoomId={selectedRoomId}
                   selectedEventName={selectedEventName}
                 />
-                <TodoList
-                  selectedRoomId={selectedRoomId}
-                  selectedEventName={selectedEventName}
-                  selectedEventAttendees={selectedEventAttendees}
-                  user={currentUser}
-                />
-              </div>
-              <SketchPad
-                selectedRoomId={selectedRoomId}
-                selectedEventName={selectedEventName}
-              />
-              <div className="drawing-pad-wrapper">
                 <DrawingPad
                   selectedRoomId={selectedRoomId}
                   selectedEventName={selectedEventName}
