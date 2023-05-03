@@ -48,7 +48,7 @@ export default function DrawingPad({ selectedRoomId, selectedEventName }) {
         {selectedRoomId !== "todo" && (
           <div className="drawing-pad-container">
             <div className="drawing-pad-wrapper">
-              <span>Drawing pad:</span>
+              <span className="druk text-outside-boxes inside-margin" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>Drawing pad:</span>
               <svg
                 onPointerDown={handlePointerDown}
                 onPointerMove={handlePointerMove}
