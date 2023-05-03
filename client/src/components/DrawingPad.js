@@ -1,6 +1,7 @@
 import * as React from "react";
 import { getStroke } from "perfect-freehand";
 
+
 const options = {
   size: 10,
   thinning: 0.5,
