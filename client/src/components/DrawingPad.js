@@ -2,7 +2,7 @@ import * as React from "react";
 import { getStroke } from "perfect-freehand";
 
 const options = {
-  size: 32,
+  size: 10,
   thinning: 0.5,
   smoothing: 0.5,
   streamline: 0.5,
@@ -24,32 +24,37 @@ export default function DrawingPad({ selectedRoomId, selectedEventName }) {
 
   function handlePointerDown(e) {
     e.target.setPointerCapture(e.pointerId);
-    setPoints([[e.pageX, e.pageY, e.pressure]]);
+    const rect = e.target.getBoundingClientRect();
+    setPoints([[e.clientX - rect.left, e.clientY - rect.top, e.pressure]]);
   }
-
+  
   function handlePointerMove(e) {
     if (e.buttons !== 1) return;
-    setPoints([...points, [e.pageX, e.pageY, e.pressure]]);
+    const rect = e.target.getBoundingClientRect();
+    setPoints([...points, [e.clientX - rect.left, e.clientY - rect.top, e.pressure]]);
   }
+  
 
   const stroke = getStroke(points, options);
   const pathData = getSvgPathFromStroke(stroke);
 
   return (
     <>
-    {selectedRoomId !== "todo" && (
-      <div className="drawing-pad-wrapper">
-        <span>Drawing pad:</span>
-        <svg
-          onPointerDown={handlePointerDown}
-          onPointerMove={handlePointerMove}
-          style={{ touchAction: "none" }}
-        >
-          {points && <path d={pathData} />}
-        </svg>
-      </div>
-    )}
-  </>
+      {selectedRoomId !== "todo" && (
+        <div className="drawing-pad-container">
+          <div className="drawing-pad-wrapper">
+            <span>Drawing pad:</span>
+            <svg
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              style={{ touchAction: "none" }}
+            >
+              {points && <path d={pathData} />}
+            </svg>
+          </div>
+        </div>
+      )}
+    </>
   );
 }
 
