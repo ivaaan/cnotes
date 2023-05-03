@@ -1,15 +1,19 @@
-import { useState, startTransition, useRef, ChangeEvent, KeyboardEvent } from 'react';
+import {
+  useState,
+  startTransition,
+  useRef,
+  ChangeEvent,
+  KeyboardEvent,
+} from "react";
 
 import {
   useMutation,
   useOthers,
   useStorage,
   useUpdateMyPresence,
-} from '../liveblocks.config';
+} from "../liveblocks.config";
 
-import { LiveList, LiveObject } from '@liveblocks/client';
-
-
+import { LiveList, LiveObject } from "@liveblocks/client";
 
 export default function TodoList({
   selectedRoomId,
@@ -23,13 +27,13 @@ export default function TodoList({
     );
 
     return (
-      <div className='someone_is_typing'>
-        {someoneIsTyping ? 'Someone is typing...' : ''}
+      <div className="someone_is_typing">
+        {someoneIsTyping ? "Someone is typing..." : ""}
       </div>
     );
   }
 
-  const [draft, setDraft] = useState('');
+  const [draft, setDraft] = useState("");
   const selectedEventAttendeeEmail = useRef();
   const updateMyPresence = useUpdateMyPresence();
   const todos = useStorage((root) => root.todos);
@@ -45,7 +49,7 @@ export default function TodoList({
   // }, []);
 
   const addTodo = useMutation(({ storage }, text) => {
-    storage.get('todos').push(
+    storage.get("todos").push(
       new LiveObject({
         text,
         assignee: selectedEventAttendeeEmail.current.value,
@@ -54,51 +58,51 @@ export default function TodoList({
   }, []);
 
   const toggleTodo = useMutation(({ storage }, index) => {
-    const todo = storage.get('todos').get(index);
-    todo?.set('checked', !todo.get('checked'));
+    const todo = storage.get("todos").get(index);
+    todo?.set("checked", !todo.get("checked"));
   }, []);
 
   const deleteTodo = useMutation(({ storage }, index) => {
-    storage.get('todos').delete(index);
+    storage.get("todos").delete(index);
   }, []);
 
   return (
     <>
-      {selectedRoomId !== 'todo' && (
+      {selectedRoomId !== "todo" && (
         <>
           <div>
-            <h1 className='druk text-outside-boxes inside-margin'>
+            <h1 className="druk text-outside-boxes inside-margin">
               To-Do List
             </h1>
-            <p className='container-agenda'>
-              <div className='inside-margin'>
+            <p className="container-agenda">
+              <div className="inside-margin">
                 {todos?.map((todo, index) => {
                   return (
-                    <div key={index} className='todo-container'>
+                    <div key={index} className="todo-container">
                       <div
-                        className='checkbox-rect todo-toggle-container text-regular'
+                        className="checkbox-rect todo-toggle-container text-regular"
                         onClick={() => toggleTodo(index)}
                         style={{
-                          color: todo.checked ? 'grey' : undefined,
+                          color: todo.checked ? "grey" : undefined,
                         }}
                       >
                         <input
-                          type='checkbox'
-                          name='checkbox'
+                          type="checkbox"
+                          name="checkbox"
                           checked={todo.checked ? true : false}
                           style={{
-                            cursor: 'pointer',
+                            cursor: "pointer",
                             textDecoration: todo.checked
-                              ? 'line-through'
+                              ? "line-through"
                               : undefined,
                           }}
                         ></input>
                         <label
-                          className='todo'
+                          className="todo"
                           style={{
-                            cursor: 'pointer',
+                            cursor: "pointer",
                             textDecoration: todo.checked
-                              ? 'line-through'
+                              ? "line-through"
                               : undefined,
                           }}
                         >
@@ -106,17 +110,17 @@ export default function TodoList({
                           {todo.assignee ? (
                             <>
                               {todo.assignee === user.email
-                                ? ' (🙋🏻: me)'
-                                : todo.assignee === 'team'
-                                ? ''
-                                : ' (💁🏻‍♀️: ' + todo.assignee + ')'}
+                                ? " (🙋🏻: me)"
+                                : todo.assignee === "team"
+                                ? ""
+                                : " (💁🏻‍♀️: " + todo.assignee + ")"}
                             </>
                           ) : (
                             <></>
                           )}
                         </label>
                         <button
-                          className='button-delete delete-button'
+                          className="button-delete delete-button"
                           onClick={() => deleteTodo(index)}
                         >
                           ✕
@@ -125,24 +129,24 @@ export default function TodoList({
                     </div>
                   );
                 })}
-                <div className='center-container'>
+                <div className="center-container">
                   {selectedEventAttendees ? (
                     <>
                       <p>
-                        Assigning to: {'   '}
+                        Assigning to: {"   "}
                         <select
-                          className='assign-to-selector'
-                          name='todo-assignee'
-                          id='todo-assignee'
+                          className="assign-to-selector"
+                          name="todo-assignee"
+                          id="todo-assignee"
                           ref={selectedEventAttendeeEmail}
                         >
-                          <option value='team'></option>
+                          <option value="team"></option>
                           {selectedEventAttendees.map((attendee) => {
                             {
                               return (
                                 <option value={attendee.email}>
                                   {attendee.email === user.email
-                                    ? 'myself'
+                                    ? "myself"
                                     : attendee.email}
                                 </option>
                               );
@@ -155,25 +159,25 @@ export default function TodoList({
                     <></>
                   )}
                   <input
-                    className='todo-input'
-                    type='text'
-                    placeholder='Add a new task here'
+                    className="todo-input"
+                    type="text"
+                    placeholder="Add a new task here"
                     value={draft}
                     onChange={(e) => {
                       setDraft(e.target.value);
                       updateMyPresence({ isTyping: true });
                     }}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         updateMyPresence({ isTyping: false });
                         addTodo(draft);
-                        setDraft('');
+                        setDraft("");
                       }
                     }}
                     onBlur={() => updateMyPresence({ isTyping: false })}
                   />
 
-                  <p className='text-regular'>
+                  <p className="text-regular">
                     <SomeoneIsTyping />
                   </p>
                 </div>

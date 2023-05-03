@@ -31,7 +31,9 @@ const Calendar: React.FC<CalendarProps> = ({
                 setSelectedEventName(event.summary);
                 // console.log('event in Calendar', event);
                 console.log("event.attendees in Calendar", event.attendees);
-                setSelectedEventAttendees(event.attendees);
+                setSelectedEventAttendees(
+                  event.attendees ? event.attendees : []
+                );
                 // e.currentTarget.classList.toggle('event-was-selected');
                 toggleClass(index);
               }}

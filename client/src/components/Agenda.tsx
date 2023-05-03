@@ -28,7 +28,7 @@ const Agenda: React.FC<AgendaProps> = ({
 
   const [draftAgenda, setDraftAgenda] = useState("");
   const updateMyPresence = useUpdateMyPresence();
-  const agendaItems = useStorage((root) => root.agendaItems) as
+  const agendaItems = useStorage((root) => root.agendaItems) as  // eslint-disable-next-line no-undef
     | LiveList<{ text: string; checked: boolean }>
     | undefined;
 
