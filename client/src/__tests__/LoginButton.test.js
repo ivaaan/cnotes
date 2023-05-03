@@ -1,17 +1,15 @@
-import React from 'react';
-import {render, screen, fireEvent} from "@testing-library/react"
-import '@testing-library/jest-dom';
-import LoginButton from "../components/LoginButton"
-import {useAuth0} from "@auth0/auth0-react"
+import React from "react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import LoginButton from "../components/LoginButton";
+import { useAuth0 } from "@auth0/auth0-react";
 
 jest.mock("@auth0/auth0-react", () => ({
   useAuth0: jest.fn(),
 }));
 
-describe('Login Button Tests', () => {
-
-
-  it('should render the login button correctly', () => {
+describe("Login Button Tests", () => {
+  it("should render the login button correctly", () => {
     // Mock the isAuthenticated value to be false
     useAuth0.mockReturnValue({
       isAuthenticated: false,
@@ -19,9 +17,11 @@ describe('Login Button Tests', () => {
     });
 
     render(<LoginButton />);
-    expect(screen.getByTestId('loginbuttontest')).toHaveTextContent('Log in with Google');
+    expect(screen.getByTestId("loginbuttontest")).toHaveTextContent(
+      "Log in with Google"
+    );
   });
-  it('should call loginWithRedirect when the button is clicked', () => {
+  it("should call loginWithRedirect when the button is clicked", () => {
     // Mock the isAuthenticated value to be false
     const loginWithRedirect = jest.fn();
     useAuth0.mockReturnValue({
@@ -31,12 +31,13 @@ describe('Login Button Tests', () => {
 
     render(<LoginButton />);
 
-    fireEvent.click(screen.getByTestId('loginbuttontest'));
+    fireEvent.click(screen.getByTestId("loginbuttontest"));
 
     expect(loginWithRedirect).toHaveBeenCalled();
-    
-    const loginContainer = screen.getByTestId('loginbuttontest');
-    expect(loginContainer).toHaveClass('text-outside-boxes header-right-child button-inter header-logout');
-   
+
+    const loginContainer = screen.getByTestId("loginbuttontest");
+    expect(loginContainer).toHaveClass(
+      "text-outside-boxes header-right-child button-inter header-logout"
+    );
   });
 });
