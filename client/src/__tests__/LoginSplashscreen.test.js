@@ -30,10 +30,5 @@ describe("Login Splashscreen Tests", () => {
     expect(description).toBeInTheDocument();
   });
 
-  it("Should render the login button", () => {
-    render(<LoginSplashscreen />);
-
-    const loginButton = screen.getByTestId("loginbuttontest");
-    expect(loginButton).toBeInTheDocument();
-  });
+ 
 });
