@@ -19,7 +19,7 @@ const LoginSplashscreen: React.FC<LoginSplashscreenProps> = ({
           Your go-to app for taking notes and creating to-dos during work calls.
         </h2>
         {/* <div id='signInDiv'></div> */}
-        <LoginButton data-testid="loginbuttontest" />
+        <LoginButton data-testid="loginbuttontest2" />
       </div>
     </>
   );

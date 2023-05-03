@@ -1,5 +1,6 @@
+import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import LogoutButton from "./LogoutButton";
+import LogoutButton from "../components/LogoutButton";
 
 jest.mock("@auth0/auth0-react", () => ({
   useAuth0: () => ({

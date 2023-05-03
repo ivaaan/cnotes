@@ -3,6 +3,7 @@
 #API CREDENTIALS
 token.json
 credentials.json
+.env
 
 # dependencies
 /node_modules

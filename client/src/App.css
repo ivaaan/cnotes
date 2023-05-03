@@ -563,8 +563,12 @@ p {
   width: 100vh;
   display: flex;
   justify-content: center;
+<<<<<<< HEAD
   margin: 0;
   padding: 0;
+=======
+  
+>>>>>>> origin/development
 }
 
 .drawing-pad-wrapper {
@@ -572,6 +576,8 @@ p {
   padding: 0;
   margin: 0;
   user-select: none;
+  border: 0.1px rgb(146, 145, 145) solid;
+  border-radius: 4px;
 }
 
 svg {
@@ -579,4 +585,6 @@ svg {
   height: 100vw;
   /* background-color: #ffffff; */
   touch-action: none;
+  border-width: 1px;
+  border-color: #000;
 }
