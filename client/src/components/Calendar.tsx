@@ -1,6 +1,7 @@
 import { format } from "date-fns";
 import { useState } from "react";
 import { CalendarProps } from "../interfaces";
+import React from "react";
 
 const Calendar: React.FC<CalendarProps> = ({
   calendarEvents,
