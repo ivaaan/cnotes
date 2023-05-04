@@ -1,7 +1,7 @@
 import * as React from "react";
 import { getStroke } from "perfect-freehand";
-import { useStorage, useMutation } from "../liveblocks.config";
-import { shallow } from "@liveblocks/client";
+// import { useStorage, useMutation } from "../liveblocks.config";
+// import { shallow } from "@liveblocks/client";
 
 const options = {
   size: 10,
@@ -24,10 +24,17 @@ const options = {
 export default function DrawingPad({ selectedRoomId, selectedEventName }) {
   const [strokes, setStrokes] = React.useState([]);
   const [currentStroke, setCurrentStroke] = React.useState([]);
-  const drawing = useStorage((root) => root.drawing);
-  const updateDrawing = useMutation(({ storage }, newDrawing) => {
-    const currentDrawing = drawing ? Array.from(drawing) : [];
-    storage.set("drawing", [...currentDrawing, newDrawing]);
+  // const drawing = useStorage((root) => root.drawing);
+  // const updateDrawing = useMutation(({ storage }, newDrawing) => {
+  //   const currentDrawing = drawing ? Array.from(drawing) : [];
+  //   storage.set("drawing", [...currentDrawing, newDrawing]);
+  // }, []);
+
+  React.useEffect(() => {
+    const savedStrokes = localStorage.getItem("drawingStrokes");
+    if (savedStrokes) {
+      setStrokes(JSON.parse(savedStrokes));
+    }
   }, []);
 
   function handlePointerDown(e) {
@@ -49,10 +56,19 @@ export default function DrawingPad({ selectedRoomId, selectedEventName }) {
 
   function handlePointerUp(e) {
     const newStroke = currentStroke;
-    setStrokes([...strokes, newStroke]);
+    setStrokes((prevStrokes) => [...prevStrokes, newStroke]);
     setCurrentStroke([]);
-    updateDrawing(newStroke);
+
+    const updatedStrokes = [...strokes, newStroke];
+    localStorage.setItem("drawingStrokes", JSON.stringify(updatedStrokes));
   }
+
+  // function handlePointerUp(e) {
+  //   const newStroke = currentStroke;
+  //   setStrokes([...strokes, newStroke]);
+  //   setCurrentStroke([]);
+  //   // updateDrawing(newStroke);
+  // }
 
   return (
     <>
