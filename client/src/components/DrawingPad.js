@@ -21,19 +21,39 @@ const options = {
   },
 };
 
+function DrawingThumbnail({ stroke, onClick }) {
+  const svgPath = getSvgPathFromStroke(getStroke(stroke, options));
+  console.log(svgPath, "WHAAAA");
+  return (
+    <div
+      onClick={onClick}
+      style={{
+        backgroundImage: svgPath,
+        border: "1px solid black",
+        width: "80px",
+        height: "120px",
+        borderRadius: "4px",
+      }}
+    >
+      <svg
+        style={{ border: "1px solid black", width: "80px", height: "120px" }}
+      >
+        <path d={svgPath} />
+      </svg>
+    </div>
+  );
+}
+
 export default function DrawingPad({ selectedRoomId, selectedEventName }) {
   const [strokes, setStrokes] = React.useState([]);
   const [currentStroke, setCurrentStroke] = React.useState([]);
-  // const drawing = useStorage((root) => root.drawing);
-  // const updateDrawing = useMutation(({ storage }, newDrawing) => {
-  //   const currentDrawing = drawing ? Array.from(drawing) : [];
-  //   storage.set("drawing", [...currentDrawing, newDrawing]);
-  // }, []);
+  const [savedDrawings, setSavedDrawings] = React.useState([]);
 
   React.useEffect(() => {
-    const savedStrokes = localStorage.getItem("drawingStrokes");
-    if (savedStrokes) {
-      setStrokes(JSON.parse(savedStrokes));
+    const drawings = localStorage.getItem("drawings");
+    if (drawings) {
+      const parsedDrawings = JSON.parse(drawings);
+      setSavedDrawings(parsedDrawings);
     }
   }, []);
 
@@ -55,20 +75,21 @@ export default function DrawingPad({ selectedRoomId, selectedEventName }) {
   }
 
   function handlePointerUp(e) {
-    const newStroke = currentStroke;
-    setStrokes((prevStrokes) => [...prevStrokes, newStroke]);
+    setStrokes([...strokes, currentStroke]);
     setCurrentStroke([]);
-
-    const updatedStrokes = [...strokes, newStroke];
-    localStorage.setItem("drawingStrokes", JSON.stringify(updatedStrokes));
   }
 
-  // function handlePointerUp(e) {
-  //   const newStroke = currentStroke;
-  //   setStrokes([...strokes, newStroke]);
-  //   setCurrentStroke([]);
-  //   // updateDrawing(newStroke);
-  // }
+  function handleSelectDrawing(drawing) {
+    setStrokes(drawing);
+  }
+
+  function handleSaveDrawing() {
+    // save strokes to localStorage
+    const newSavedDrawings = [...savedDrawings, strokes];
+    localStorage.setItem("drawings", JSON.stringify(newSavedDrawings));
+    setSavedDrawings(newSavedDrawings);
+    alert("Drawing saved!");
+  }
 
   return (
     <>
@@ -107,7 +128,19 @@ export default function DrawingPad({ selectedRoomId, selectedEventName }) {
                 )}
               </svg>
             </div>
+            <div className="drawing-thumbnail-container">
+              {savedDrawings.map((drawing, index) => (
+                <DrawingThumbnail
+                  key={index}
+                  stroke={drawing}
+                  onClick={() => handleSelectDrawing(drawing)}
+                />
+              ))}
+            </div>
           </div>
+          <button className="btn" onClick={handleSaveDrawing}>
+            Save drawing
+          </button>
         </div>
       )}
     </>
