@@ -55,6 +55,8 @@ npm run format
 
 End to end testing with cypress:
 
+From root folder:
+
 ```bash
 npm i
 npx cypress open

@@ -76,8 +76,9 @@ export default function App() {
         <>
           <RoomProvider
             id={selectedRoomId}
-            initialPresence={{}}
+            initialPresence={{ cursor: null, isTyping: false }}
             initialStorage={() => ({
+              drawing: new LiveList([]),
               todos: new LiveList(),
               agendaItems: new LiveList(),
               shapes: new LiveMap(),

@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = ({
             ? "Team notes for:"
             : "👇🏻 Select a calendar event:"}
         </h1>
-        <h1 className="text-outside-boxes inside-margin">
+        <h1 className="druk text-outside-boxes inside-margin">
           {selectedEventName ? selectedEventName : ""}
         </h1>
       </div>

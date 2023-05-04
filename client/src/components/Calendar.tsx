@@ -16,7 +16,7 @@ const Calendar: React.FC<CalendarProps> = ({
 
   return (
     <div data-testid="calendar-component">
-      {calendarEvents.length > 0 ? (
+      {calendarEvents?.length > 0 ? (
         <div className="cal-container">
           {calendarEvents.map((event, index) => (
             <div
