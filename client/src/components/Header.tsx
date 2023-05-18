@@ -1,27 +1,42 @@
-import { useState, useEffect } from 'react';
-import { useOthers } from '../liveblocks.config';
-import logo from '../cnotes-logo.png';
-import LoginButton from './LoginButton';
-import LogoutButton from './LogoutButton';
+import { useState, useEffect } from "react";
+import { useOthers } from "../liveblocks.config";
+import logo from "../cnotes-logo.png";
+import LoginButton from "./LoginButton";
+import LogoutButton from "./LogoutButton";
+import React from "react";
+// eslint-disable-next-line no-undef
+interface HeaderProps {
+  selectedRoomId: string;
+  selectedEventName: string | null;
+  selectedEventAttendees: Array<{ email: string }> | null;
+  user: {
+    firstname?: string;
+    lastname?: string;
+    email?: string;
+  } | null;
+  calendarEvents: any[];
+  setCurrentUser: (user: any) => void;
+}
 
-export default function Header({
+const Header: React.FC<HeaderProps> = ({
   selectedRoomId,
   selectedEventName,
   selectedEventAttendees,
   user,
-  setUser,
-}) {
+  calendarEvents,
+  setCurrentUser,
+}) => {
   function WhoIsHere() {
     const userCount = useOthers((others) => others.length);
 
     return (
       <>
         {userCount > 0 ? (
-          <div className='who_is_here'>
+          <div className="who_is_here">
             👯 There are {userCount} other users online
           </div>
         ) : (
-          <div className='who_is_here'>
+          <div className="who_is_here">
             🙆🏻‍♀️ You are the only user editing these notes right now!
           </div>
         )}
@@ -34,11 +49,11 @@ export default function Header({
       {user && (
         <>
           <div>
-            <img className='logo-header' src={logo} />
-            <h1 className='header text-outside-boxes'>CNotes</h1>
+            <img className="logo-header" src={logo} />
+            <h1 className="header text-outside-boxes">CNotes</h1>
           </div>
-          <div className='header-right'>
-            <p className='header-right-child text-outside-boxes inside-margin'>
+          <div className="header-right">
+            <p className="header-right-child text-outside-boxes inside-margin">
               <LoginButton />
               <LogoutButton user={user} />
               {/* <p
@@ -52,26 +67,26 @@ export default function Header({
         </>
       )}
       <div>
-        <h1 className='druk text-outside-boxes inside-margin'>
+        <h1 className="druk text-outside-boxes inside-margin">
           {selectedEventName
-            ? 'Team notes for:'
-            : '👇🏻 Select a calendar event:'}
+            ? "Team notes for:"
+            : "👇🏻 Select a calendar event:"}
         </h1>
-        <h1 className='text-outside-boxes inside-margin'>
-          {selectedEventName ? selectedEventName : ''}
+        <h1 className="druk text-outside-boxes inside-margin">
+          {selectedEventName ? selectedEventName : ""}
         </h1>
       </div>
       <div>
-        {selectedRoomId !== 'todo' && (
+        {selectedRoomId !== "todo" && (
           <>
             {selectedEventAttendees ? (
-              <p className='text-outside-boxes inside-margin'>
+              <p className="text-outside-boxes inside-margin">
                 Team members in this calendar event:
                 {selectedEventAttendees.map((attendee) => {
                   {
                     return (
                       <>
-                        {attendee.email === user.email ? (
+                        {attendee.email === user?.email ? (
                           <></>
                         ) : (
                           <li>{attendee.email}</li>
@@ -82,11 +97,11 @@ export default function Header({
                 })}
               </p>
             ) : (
-              <p className='text-outside-boxes inside-margin'>
+              <p className="text-outside-boxes inside-margin">
                 This calendar event does not have any attendees yet.
               </p>
             )}
-            <p className='text-outside-boxes inside-margin'>
+            <p className="text-outside-boxes inside-margin">
               <WhoIsHere />
             </p>
           </>
@@ -94,4 +109,6 @@ export default function Header({
       </div>
     </>
   );
-}
+};
+
+export default Header;

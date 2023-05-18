@@ -541,3 +541,45 @@ p {
   /* min-height: 300px; */
   /* overflow-y: scroll; */
 }
+
+
+
+/* svg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 400px;
+  background-color: #ffffff;
+  touch-action: none;
+} */
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.drawing-pad-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  
+}
+
+.drawing-pad-wrapper {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  user-select: none;
+  border: 0.1px rgb(146, 145, 145) solid;
+  border-radius: 4px;
+}
+
+svg {
+  width: 100vh;
+  height: 100vw;
+  /* background-color: #ffffff; */
+  touch-action: none;
+  border-width: 1px;
+  border-color: #000;
+}

@@ -1,33 +1,42 @@
-import { useState } from 'react';
-
+import React from "react";
+import { useState } from "react";
+import { AgendaProps, AgendaItem } from "../interfaces";
 import {
   useMutation,
   useOthers,
   useStorage,
   useUpdateMyPresence,
-} from '../liveblocks.config';
+} from "../liveblocks.config";
 
-import { LiveList, LiveObject } from '@liveblocks/client';
+import { LiveList, LiveObject } from "@liveblocks/client";
 
-export default function Agenda({ selectedRoomId, selectedEventName }) {
+const Agenda: React.FC<AgendaProps> = ({
+  selectedRoomId,
+  selectedEventName,
+}) => {
   function SomeoneIsTyping() {
     const someoneIsTyping = useOthers((others) =>
       others.some((other) => other.presence.isTyping)
     );
 
     return (
-      <div className='someone_is_typing'>
-        {someoneIsTyping ? 'Someone is typing...' : ''}
+      <div className="someone_is_typing">
+        {someoneIsTyping ? "Someone is typing..." : ""}
       </div>
     );
   }
 
-  const [draftAgenda, setDraftAgenda] = useState('');
+  const [draftAgenda, setDraftAgenda] = useState("");
   const updateMyPresence = useUpdateMyPresence();
-  const agendaItems = useStorage((root) => root.agendaItems);
+  const agendaItems = useStorage((root) => root.agendaItems) as  // eslint-disable-next-line no-undef
+    | LiveList<{ text: string; checked: boolean }>
+    | undefined;
 
-  const addAgendaItem = useMutation(({ storage }, text) => {
-    storage.get('agendaItems')?.push(new LiveObject({ text }));
+  const addAgendaItem = useMutation(({ storage }, text: string) => {
+    (storage.get("agendaItems") as LiveList<AgendaItem>).push({
+      text,
+      checked: false,
+    });
     // console.log("storage.get('agendaItems')", storage.get('agendaItems'));
     // console.log('agendaItems', agendaItems);
     // const storageFallback = storage.get('agendaItems') || [];
@@ -35,58 +44,65 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
     // storage.set('agendaItems', [...storageFallback, { text }]);
   }, []);
 
-  const toggleAgendaItem = useMutation(({ storage }, index) => {
-    const agenda = storage.get('agendaItems').get(index);
-    agenda?.set('checked', !agenda.get('checked'));
+  const toggleAgendaItem = useMutation(({ storage }, index: number) => {
+    const agenda = (storage.get("agendaItems") as LiveList<AgendaItem>).get(
+      index
+    );
+    if (agenda) {
+      (storage.get("agendaItems") as LiveList<AgendaItem>).set(index, {
+        ...agenda,
+        checked: !agenda.checked,
+      });
+    }
   }, []);
 
-  const deleteAgendaItem = useMutation(({ storage }, index) => {
-    storage.get('agendaItems').delete(index);
+  const deleteAgendaItem = useMutation(({ storage }, index: number) => {
+    (storage.get("agendaItems") as LiveList<AgendaItem>).delete(index);
   }, []);
 
   return (
-    <>
-      {selectedRoomId !== 'todo' && (
+    <div data-testid="agenda-component">
+      {selectedRoomId !== "todo" && (
         <>
-          <div className='agenda-test'>
-            <h1 className='druk text-outside-boxes inside-margin'>Agenda</h1>
-            <p className='container-agenda'>
-              <div className='inside-margin'>
+          <div className="agenda-test">
+            <h1 className="druk text-outside-boxes inside-margin">Agenda</h1>
+            <p className="container-agenda">
+              <div className="inside-margin">
                 {agendaItems?.map((agendaItem, index) => {
                   return (
-                    <div key={index} className='todo-container'>
+                    <div key={index} className="todo-container">
                       <div
-                        className='checkbox-circle todo-toggle-container text-regular'
+                        className="checkbox-circle todo-toggle-container text-regular"
                         onClick={() => toggleAgendaItem(index)}
                         style={{
-                          color: agendaItem.checked ? 'grey' : undefined,
+                          color: agendaItem.checked ? "grey" : undefined,
                         }}
                       >
                         <input
-                          type='checkbox'
-                          name='checkbox'
-                          className=''
+                          type="checkbox"
+                          name="checkbox"
+                          className=""
                           checked={agendaItem.checked ? true : false}
                           style={{
-                            cursor: 'pointer',
+                            cursor: "pointer",
                             textDecoration: agendaItem.checked
-                              ? 'line-through'
+                              ? "line-through"
                               : undefined,
                           }}
                         ></input>
                         <label
-                          className='todo'
+                          className="todo"
                           style={{
-                            cursor: 'pointer',
+                            cursor: "pointer",
                             textDecoration: agendaItem.checked
-                              ? 'line-through'
+                              ? "line-through"
                               : undefined,
                           }}
                         >
                           {agendaItem.text}
                         </label>
                         <button
-                          className='button-delete delete-button'
+                          className="button-delete delete-button"
                           onClick={() => deleteAgendaItem(index)}
                         >
                           ✕
@@ -95,26 +111,26 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
                     </div>
                   );
                 })}
-                <div className='center-container'>
+                <div className="center-container">
                   <input
-                    className='agenda-input'
-                    type='text'
-                    placeholder='Add a new agenda item'
+                    className="agenda-input"
+                    type="text"
+                    placeholder="Add a new agenda item"
                     value={draftAgenda}
                     onChange={(e) => {
                       setDraftAgenda(e.target.value);
                       updateMyPresence({ isTyping: true });
                     }}
                     onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
+                      if (e.key === "Enter") {
                         updateMyPresence({ isTyping: false });
                         addAgendaItem(draftAgenda);
-                        setDraftAgenda('');
+                        setDraftAgenda("");
                       }
                     }}
                     onBlur={() => updateMyPresence({ isTyping: false })}
                   />
-                  <p className='text-regular'>
+                  <p className="text-regular">
                     <SomeoneIsTyping />
                   </p>
                 </div>
@@ -123,6 +139,8 @@ export default function Agenda({ selectedRoomId, selectedEventName }) {
           </div>
         </>
       )}
-    </>
+    </div>
   );
-}
+};
+
+export default Agenda;

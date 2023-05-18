@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   useMap,
   useMyPresence,
@@ -6,7 +6,7 @@ import {
   useOthers,
   useHistory,
   useBatch,
-} from '../liveblocks.config';
+} from "../liveblocks.config";
 
 function Canvas({ shapes }) {
   const [isDragging, setIsDragging] = useState(false);
@@ -15,7 +15,7 @@ function Canvas({ shapes }) {
   const others = useOthers();
   const history = useHistory();
   const batch = useBatch();
-  const [draftPostit, setDraftPostit] = useState('');
+  const [draftPostit, setDraftPostit] = useState("");
 
   const insertRectangle = () => {
     batch(() => {
@@ -72,18 +72,18 @@ function Canvas({ shapes }) {
   return (
     <>
       <div
-        className='canvas'
+        className="canvas"
         onPointerMove={onCanvasPointerMove}
         onPointerUp={onCanvasPointerUp}
       >
         {Array.from(shapes, ([shapeId, shape]) => {
           let selectionColor =
             selectedShape === shapeId
-              ? 'blue'
+              ? "blue"
               : others
                   .toArray()
                   .some((user) => user.presence?.selectedShape === shapeId)
-              ? 'green'
+              ? "green"
               : undefined;
           return (
             <Rectangle
@@ -96,19 +96,19 @@ function Canvas({ shapes }) {
           );
         })}
       </div>
-      <div className='toolbar'>
+      <div className="toolbar">
         {/* <p>{draftPostit} test</p> */}
         <input
-          className='postit-input'
-          type='text'
-          placeholder='Type text here'
+          className="postit-input"
+          type="text"
+          placeholder="Type text here"
           // value={draftPostit}
           onChange={(e) => {
             setDraftPostit(e.target.value);
             updateMyPresence({ isTyping: true });
           }}
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               updateMyPresence({ isTyping: false });
               setDraftPostit(e.target.value);
               insertRectangle();
@@ -133,11 +133,11 @@ const Rectangle = ({ shape, id, onShapePointerDown, selectionColor }) => {
   return (
     <div
       onPointerDown={(e) => onShapePointerDown(e, id)}
-      className='rectangle'
+      className="rectangle"
       style={{
         transform: `translate(${x}px, ${y}px)`,
-        backgroundColor: fill ? fill : '#CCC',
-        borderColor: selectionColor || 'transparent',
+        backgroundColor: fill ? fill : "#CCC",
+        borderColor: selectionColor || "transparent",
       }}
     >
       {text}
@@ -146,16 +146,16 @@ const Rectangle = ({ shape, id, onShapePointerDown, selectionColor }) => {
 };
 
 const COLORS = [
-  '#F89C26',
-  '#D9AD83',
-  '#B0CAE1',
-  '#F1A23D',
-  '#C4B5B9',
-  '#F8823E',
-  '#F18852',
-  '#E3A967',
-  '#FC8428',
-  '#B0CCE4',
+  "#F89C26",
+  "#D9AD83",
+  "#B0CAE1",
+  "#F1A23D",
+  "#C4B5B9",
+  "#F8823E",
+  "#F18852",
+  "#E3A967",
+  "#FC8428",
+  "#B0CCE4",
 ];
 
 function getRandomInt(max) {
@@ -167,20 +167,20 @@ function getRandomColor() {
 }
 
 export default function SketchPad({ selectedRoomId, selectedEventName }) {
-  const shapes = useMap('shapes');
+  const shapes = useMap("shapes");
 
   if (shapes == null) {
-    return <div className='loading'>Loading</div>;
+    return <div className="loading">Loading</div>;
   }
 
   return (
     <>
-      {selectedRoomId !== 'todo' && (
+      {selectedRoomId !== "todo" && (
         <div>
-          <h1 className='druk text-outside-boxes center-container'>
+          <h1 className="druk text-outside-boxes center-container">
             Sticky Notes
           </h1>
-          <p className='rounded-box sketchpad container-agenda'>
+          <p className="rounded-box sketchpad container-agenda">
             <Canvas shapes={shapes} />
           </p>
         </div>
