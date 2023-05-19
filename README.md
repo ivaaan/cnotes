@@ -1,6 +1,6 @@
 # CNotes: a note-taking app for team calls.
 
-CNotes ("call notes") syncs with Google Calendar and creates a multi-user note-taking page that allows everyone who's on the call to edit it. The page has the following sections: Google Calendar (to click on events and see notes for each event), call agenda, to-do list, text notes, possibly drawing pad or flowcharts, etc.
+CNotes ("call notes") syncs with Google Calendar and creates a multi-user note-taking page that allows everyone who's on the call to edit it. The page has the following sections: Google Calendar (to click on events and see notes for each event), call agenda, to-do list, text notes, and sticky notes.
 
 ## MVP
 
@@ -45,15 +45,7 @@ To run component testing on client:
 npm run test
 ```
 
-## To run lint:
-
-```bash
-cd client
-npm i
-npm run format
-```
-
-End to end testing with cypress:
+## End to end testing with cypress:
 
 From root folder:
 
